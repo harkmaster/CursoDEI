@@ -11,7 +11,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
 
   <script>
     // Paleta institucional RACSA
@@ -49,6 +49,18 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .cert-aspect {
+      aspect-ratio: 1600 / 1130;
+    }
+
+    /* Trama guilloché sutil para el certificado */
+    .cert-guilloche {
+      background-color: #FFFFFF;
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(0, 159, 227, 0.05) 0%, transparent 65%),
+        repeating-radial-gradient(circle at 50% 50%, rgba(0, 45, 98, 0.025) 0, rgba(0, 45, 98, 0.025) 1px, transparent 1px, transparent 14px);
+    }
+
     /* Contenedor exclusivo para imprimir solo el material didáctico */
     #didactic-print-container {
       display: none;
@@ -69,15 +81,8 @@
       body.print-mode-cert #didactic-print-container {
         display: none !important;
       }
-      body.print-mode-cert main {
-        max-width: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
       body.print-mode-cert #section-4 {
         display: block !important;
-        margin: 0 !important;
-        padding: 0 !important;
       }
       body.print-mode-cert #print-wrapper {
         display: flex !important;
@@ -89,13 +94,11 @@
         margin: 0 !important;
         background: #ffffff !important;
       }
-      body.print-mode-cert #certificate-preview-img {
+      body.print-mode-cert #certificate-card {
         width: 100% !important;
         height: 100% !important;
         max-width: none !important;
-        object-fit: contain !important;
         box-shadow: none !important;
-        border: none !important;
         border-radius: 0 !important;
         margin: 0 !important;
       }
@@ -191,10 +194,10 @@
   <div id="toast-container" class="no-print fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-[calc(100%-2.5rem)] pointer-events-none"></div>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
     <!-- SECCIÓN 1: REGISTRO -->
-    <section id="section-1" class="no-print fade-in max-w-5xl mx-auto">
+    <section id="section-1" class="no-print fade-in">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-8">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-4">
@@ -230,19 +233,19 @@
 
             <div>
               <label for="input-email" class="block text-sm font-semibold text-navy mb-1.5">
-                Correo electrónico de Gmail <span class="text-red-600">*</span>
+                Correo electrónico institucional <span class="text-red-600">*</span>
               </label>
               <input
                 type="email"
                 id="input-email"
                 name="email"
                 autocomplete="email"
-                placeholder="ejemplo@gmail.com"
+                placeholder="usuario@racsa.go.cr"
                 class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-corp focus:border-corp transition"
                 required
               />
               <p class="mt-1.5 text-xs text-slate-500">
-                Debe ser una cuenta válida terminada en <strong>@gmail.com</strong>.
+                Debe ser una cuenta institucional válida terminada en <strong>@racsa.go.cr</strong>.
               </p>
               <p id="error-email" class="hidden mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1.5"></p>
             </div>
@@ -289,7 +292,7 @@
                 </span>
                 <div>
                   <p class="font-semibold text-navy">Estructura académica</p>
-                  <p class="text-xs text-slate-500">4 módulos breves (exportables a PDF) + examen aleatorio de 8 preguntas.</p>
+                  <p class="text-xs text-slate-500">4 módulos breves (exportables a PDF) + examen de 8 preguntas.</p>
                 </div>
               </li>
               <li class="flex items-start gap-3">
@@ -331,7 +334,8 @@
     </section>
 
     <!-- SECCIÓN 2: MINICURSO INTERACTIVO -->
-    <section id="section-2" class="no-print hidden fade-in max-w-5xl mx-auto">
+    <section id="section-2" class="no-print hidden fade-in">
+      <!-- Barra superior de módulos + botón exportar PDF solo material didáctico -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-3 sm:p-4 mb-5 space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-slate-100">
           <p class="text-xs font-semibold text-navy uppercase tracking-wider">
@@ -373,6 +377,7 @@
         </div>
       </div>
 
+      <!-- Contenedor de módulos -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-8">
 
         <!-- MÓDULO 1 -->
@@ -730,14 +735,14 @@
       </div>
     </section>
 
-    <!-- SECCIÓN 3: EXAMEN DE APROBACIÓN (PREGUNTAS Y RESPUESTAS ALEATORIAS) -->
-    <section id="section-3" class="no-print hidden fade-in space-y-6 max-w-5xl mx-auto">
+    <!-- SECCIÓN 3: EXAMEN DE APROBACIÓN -->
+    <section id="section-3" class="no-print hidden fade-in space-y-6">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Paso 3 de 4 · Evaluación Aleatoria</span>
+          <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Paso 3 de 4 · Evaluación</span>
           <h2 class="text-2xl font-bold text-navy">Examen de Aprobación</h2>
           <p class="text-sm text-slate-600 mt-1">
-            Responde las 8 preguntas de selección única (presentadas en orden aleatorio). Requieres al menos <strong>7 respuestas correctas (80%)</strong> para aprobar y obtener tu Comprobante de Participación.
+            Responde las 8 preguntas de selección única. Requieres al menos <strong>7 respuestas correctas (80%)</strong> para aprobar y obtener tu Comprobante de Participación.
           </p>
         </div>
         <div class="shrink-0 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-center">
@@ -772,7 +777,7 @@
       </form>
     </section>
 
-    <!-- SECCIÓN 4: COMPROBANTE DE PARTICIPACIÓN (VISTA PREVIA AMPLIA Y EXACTA EN ALTA RESOLUCIÓN) -->
+    <!-- SECCIÓN 4: COMPROBANTE DE PARTICIPACIÓN (PALETA RACSA, LIMPIO SIN SELLO NI LAZO) -->
     <section id="section-4" class="hidden fade-in space-y-6">
       <div id="cert-intro" class="no-print bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -813,17 +818,80 @@
         </div>
       </div>
 
-      <!-- Vista previa de pantalla completa proporcional generada desde Canvas 2200x1554 (nunca se recorta ni se descuadra) -->
+      <!-- Vista previa imprimible del Certificado -->
       <div id="print-wrapper" class="flex justify-center">
-        <img
-          id="certificate-preview-img"
-          alt="Vista previa del Comprobante de Participación"
-          class="w-full max-w-[1120px] h-auto rounded-xl shadow-2xl border border-slate-200 bg-white block"
-        />
+        <div
+          id="certificate-card"
+          class="cert-aspect w-full max-w-[960px] bg-white rounded-xl shadow-xl overflow-hidden relative p-3 sm:p-5 md:p-6 select-none"
+        >
+          <!-- Marco institucional RACSA (azul marino + doble línea cian) -->
+          <div class="w-full h-full border-[6px] sm:border-[8px] border-navy p-1.5 sm:p-2 relative">
+            <div class="w-full h-full border-2 border-corp relative flex flex-col justify-between px-6 sm:px-12 md:px-16 py-6 sm:py-9 md:py-11 cert-guilloche">
+
+              <!-- Adornos de esquina en cian corporativo -->
+              <span class="absolute top-2 left-2 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-l-2 border-corp"></span>
+              <span class="absolute top-2 right-2 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-r-2 border-corp"></span>
+              <span class="absolute bottom-2 left-2 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-l-2 border-corp"></span>
+              <span class="absolute bottom-2 right-2 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-r-2 border-corp"></span>
+
+              <!-- Título bicolor -->
+              <div class="text-center pt-1 sm:pt-3">
+                <h3 class="font-serif text-xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                  <span class="text-navy">COMPROBANTE</span> <span class="text-corp">DE PARTICIPACIÓN</span>
+                </h3>
+              </div>
+
+              <!-- Cuerpo central -->
+              <div class="text-center my-auto py-2">
+                <p class="font-serif italic text-xs sm:text-base text-navy/90">
+                  Otorgado a:
+                </p>
+                <p id="cert-user-name" class="mt-1 sm:mt-2 font-serif italic text-2xl sm:text-4xl md:text-5xl font-bold text-navy px-2 break-words">
+                  Nombre del Participante
+                </p>
+                <p class="mt-3 sm:mt-5 text-xs sm:text-base text-slate-700">
+                  Por haber completado y aprobado el minicurso:
+                </p>
+                <p class="mt-1 sm:mt-2 text-sm sm:text-xl md:text-2xl font-bold text-navy">
+                  Cómo y dónde denunciar actos de corrupción
+                </p>
+              </div>
+
+              <!-- Dos columnas inferiores limpias (sin sello ni firma manuscrita) -->
+              <div class="pt-2 sm:pt-4">
+                <div class="grid grid-cols-2 gap-6 sm:gap-12 items-end max-w-3xl mx-auto">
+                  <!-- Izquierda: Fecha de Aprobación -->
+                  <div class="text-center">
+                    <p class="text-[10px] sm:text-sm font-medium text-navy">Fecha de Aprobación</p>
+                    <p id="cert-date" class="mt-0.5 text-xs sm:text-base font-semibold text-navy">--</p>
+                    <div class="mt-1.5 w-36 sm:w-56 h-[2px] bg-corp mx-auto"></div>
+                  </div>
+
+                  <!-- Derecha: Acredita -->
+                  <div class="text-center">
+                    <p class="text-[10px] sm:text-sm font-medium text-navy">Acredita:</p>
+                    <p class="mt-0.5 text-xs sm:text-base font-bold text-navy">Jimena Zárate Manzanares</p>
+                    <div class="my-1.5 w-40 sm:w-64 h-[2px] bg-corp mx-auto"></div>
+                    <p class="text-[9px] sm:text-xs font-medium text-navy/90 leading-snug">
+                      Departamento de Estrategia e Innovación, RACSA
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Pie discreto de verificación -->
+                <div class="mt-4 sm:mt-6 pt-2 border-t border-slate-200/90 flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5 text-[8px] sm:text-[10px] text-slate-500">
+                  <span>Calificación: <strong id="cert-score" class="text-navy">--</strong></span>
+                  <span>Código de verificación: <strong id="cert-code" class="text-navy font-mono">--</strong></span>
+                  <span>Correo registrado: <strong id="cert-email" class="text-navy">--</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Canvas oculto de ultra alta resolución (2200x1554 px, proporción A4 horizontal) -->
-      <canvas id="certificate-canvas" width="2200" height="1554" class="hidden"></canvas>
+      <!-- Canvas oculto de alta resolución (1600x1130 px) -->
+      <canvas id="certificate-canvas" width="1600" height="1130" class="hidden"></canvas>
     </section>
   </main>
 
@@ -950,42 +1018,12 @@
       }
     ];
 
-    // Algoritmo Fisher-Yates para mezclar preguntas y opciones aleatoriamente
-    function shuffleArray(array) {
-      const copy = array.slice();
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
-    function buildShuffledExam() {
-      const shuffledQs = shuffleArray(EXAM_QUESTIONS);
-      return shuffledQs.map((q) => {
-        const mappedOptions = q.options.map((text, idx) => ({
-          text,
-          isCorrect: idx === q.correctIndex
-        }));
-        const shuffledOptions = shuffleArray(mappedOptions);
-        const newCorrectIndex = shuffledOptions.findIndex((o) => o.isCorrect);
-        return {
-          id: q.id,
-          question: q.question,
-          options: shuffledOptions.map((o) => o.text),
-          correctIndex: newCorrectIndex,
-          explanation: q.explanation
-        };
-      });
-    }
-
     const appState = {
       currentStep: 1,
       maxUnlockedStep: 1,
       currentModule: 0,
       user: { fullName: "", email: "" },
       exam: {
-        shuffledQuestions: [],
         answers: {},
         submitted: false,
         score: 0,
@@ -1040,22 +1078,11 @@
         }
         return;
       }
-
-      if (stepNumber === 3 && appState.exam.shuffledQuestions.length === 0) {
-        appState.exam.shuffledQuestions = buildShuffledExam();
-        renderExamQuestions();
-      }
-
       appState.currentStep = stepNumber;
       for (let i = 1; i <= 4; i++) {
         const sec = document.getElementById(`section-${i}`);
         if (sec) sec.classList.toggle("hidden", i !== stepNumber);
       }
-
-      if (stepNumber === 4 && appState.exam.passed) {
-        renderCertificateCanvasAndPreview();
-      }
-
       updateProgressBar();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -1114,12 +1141,12 @@
         setFieldError(inputFullname, errorFullname, "");
       }
 
-      const gmailRegex = /^[a-z0-9._%+-]+@gmail\.com$/i;
+      const racsaEmailRegex = /^[a-z0-9._%+-]+@racsa\.go\.cr$/i;
       if (!emailVal) {
-        setFieldError(inputEmail, errorEmail, "El correo electrónico de Gmail es obligatorio.");
+        setFieldError(inputEmail, errorEmail, "El correo electrónico institucional es obligatorio.");
         isValid = false;
-      } else if (!gmailRegex.test(emailVal)) {
-        setFieldError(inputEmail, errorEmail, "Debes ingresar un correo válido que termine en @gmail.com (ejemplo: usuario@gmail.com).");
+      } else if (!racsaEmailRegex.test(emailVal)) {
+        setFieldError(inputEmail, errorEmail, "Debes ingresar un correo institucional válido que termine en @racsa.go.cr (ejemplo: usuario@racsa.go.cr).");
         isValid = false;
       } else {
         setFieldError(inputEmail, errorEmail, "");
@@ -1222,6 +1249,7 @@
 
       window.print();
 
+      // Restaurar modo certificado tras imprimir
       setTimeout(() => {
         document.body.classList.remove("print-mode-material");
         document.body.classList.add("print-mode-cert");
@@ -1231,20 +1259,17 @@
 
     function startExam() {
       if (appState.maxUnlockedStep < 3) appState.maxUnlockedStep = 3;
-      if (appState.exam.shuffledQuestions.length === 0) {
-        appState.exam.shuffledQuestions = buildShuffledExam();
-      }
       renderExamQuestions();
       navigateToStep(3);
     }
 
-    // EXAMEN ALEATORIO
+    // EXAMEN
     function renderExamQuestions() {
       const container = document.getElementById("questions-container");
       container.innerHTML = "";
       const letters = ["a", "b", "c", "d"];
 
-      appState.exam.shuffledQuestions.forEach((q, qIdx) => {
+      EXAM_QUESTIONS.forEach((q, qIdx) => {
         const card = document.createElement("div");
         card.id = `q-card-${q.id}`;
         card.className = "bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6 transition";
@@ -1325,16 +1350,14 @@
 
     function updateAnsweredCounter() {
       const answered = Object.keys(appState.exam.answers).length;
-      const total = appState.exam.shuffledQuestions.length || EXAM_QUESTIONS.length;
-      document.getElementById("exam-answered-count").textContent = `${answered} / ${total}`;
+      document.getElementById("exam-answered-count").textContent = `${answered} / ${EXAM_QUESTIONS.length}`;
     }
 
     document.getElementById("exam-form").addEventListener("submit", function (e) {
       e.preventDefault();
       if (appState.exam.submitted) return;
 
-      const questions = appState.exam.shuffledQuestions;
-      const missing = questions.filter((q) => appState.exam.answers[q.id] === undefined);
+      const missing = EXAM_QUESTIONS.filter((q) => appState.exam.answers[q.id] === undefined);
       if (missing.length > 0) {
         showToast(`Te faltan ${missing.length} pregunta(s) por responder antes de calificar.`, "error");
         const firstMissingCard = document.getElementById(`q-card-${missing[0].id}`);
@@ -1347,11 +1370,11 @@
       }
 
       let correctCount = 0;
-      questions.forEach((q) => {
+      EXAM_QUESTIONS.forEach((q) => {
         if (appState.exam.answers[q.id] === q.correctIndex) correctCount++;
       });
 
-      const total = questions.length;
+      const total = EXAM_QUESTIONS.length;
       const percentage = Math.round((correctCount / total) * 100);
       const passed = correctCount >= 7;
 
@@ -1371,7 +1394,7 @@
         appState.exam.verificationCode = generateVerificationCode(now);
         appState.maxUnlockedStep = 4;
         updateProgressBar();
-        renderCertificateCanvasAndPreview();
+        populateCertificate();
 
         enviarRegistroAGoogleSheets({
           nombre: appState.user.fullName,
@@ -1418,8 +1441,6 @@
     });
 
     function retryExam() {
-      // Al reintentar, se vuelven a mezclar preguntas y respuestas
-      appState.exam.shuffledQuestions = buildShuffledExam();
       appState.exam.answers = {};
       appState.exam.submitted = false;
       appState.exam.score = 0;
@@ -1428,160 +1449,18 @@
       document.getElementById("exam-submit-bar").classList.remove("hidden");
       renderExamQuestions();
       window.scrollTo({ top: 0, behavior: "smooth" });
-      showToast("Examen reiniciado con nuevo orden aleatorio. ¡Mucho éxito!", "info");
+      showToast("Examen reiniciado. ¡Mucho éxito en este intento!", "info");
     }
 
-    // CERTIFICADO: RENDERIZADO EN CANVAS 2200x1554 + VISTA PREVIA EXACTA + PNG + PDF
-    async function renderCertificateCanvasAndPreview() {
-      if (document.fonts && document.fonts.ready) {
-        try { await document.fonts.ready; } catch (_) {}
-      }
-
-      const canvas = document.getElementById("certificate-canvas");
-      const ctx = canvas.getContext("2d");
-      const W = 2200;
-      const H = 1554;
-
-      // 1. Fondo blanco limpio con trama guilloché sutil
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(0, 0, W, H);
-
-      ctx.save();
-      ctx.strokeStyle = "rgba(0, 159, 227, 0.055)";
-      ctx.lineWidth = 1.6;
-      for (let r = 110; r < 1180; r += 34) {
-        ctx.beginPath();
-        ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      ctx.strokeStyle = "rgba(0, 45, 98, 0.03)";
-      ctx.lineWidth = 1.2;
-      for (let r = 93; r < 1160; r += 34) {
-        ctx.beginPath();
-        ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      // 2. Marco institucional RACSA (azul marino + doble línea cian)
-      ctx.strokeStyle = "#002D62";
-      ctx.lineWidth = 24;
-      ctx.strokeRect(56, 56, W - 112, H - 112);
-
-      ctx.strokeStyle = "#009FE3";
-      ctx.lineWidth = 5;
-      ctx.strokeRect(92, 92, W - 184, H - 184);
-
-      ctx.strokeStyle = "rgba(0, 45, 98, 0.25)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(106, 106, W - 212, H - 212);
-
-      // Adornos geométricos en las 4 esquinas (cian corporativo)
-      const cornerSize = 48;
-      ctx.strokeStyle = "#009FE3";
-      ctx.lineWidth = 5.5;
-      const drawCorner = (x, y, dx, dy) => {
-        ctx.beginPath();
-        ctx.moveTo(x, y + dy * cornerSize);
-        ctx.lineTo(x, y);
-        ctx.lineTo(x + dx * cornerSize, y);
-        ctx.stroke();
-      };
-      drawCorner(122, 122, 1, 1);
-      drawCorner(W - 122, 122, -1, 1);
-      drawCorner(122, H - 122, 1, -1);
-      drawCorner(W - 122, H - 122, -1, -1);
-
-      // 3. Título bicolor centrado
-      ctx.font = "700 88px 'Playfair Display', Georgia, serif";
-      const t1 = "COMPROBANTE ";
-      const t2 = "DE PARTICIPACIÓN";
-      const w1 = ctx.measureText(t1).width;
-      const w2 = ctx.measureText(t2).width;
-      const startX = (W - (w1 + w2)) / 2;
-
-      ctx.textAlign = "left";
-      ctx.fillStyle = "#002D62";
-      ctx.fillText(t1, startX, 315);
-      ctx.fillStyle = "#009FE3";
-      ctx.fillText(t2, startX + w1, 315);
-
-      // 4. Cuerpo central
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#002D62";
-      ctx.font = "italic 600 44px 'Playfair Display', Georgia, serif";
-      ctx.fillText("Otorgado a:", W / 2, 435);
-
-      const participantName = appState.user.fullName || "Nombre del Participante";
-      let nameFontSize = 104;
-      ctx.font = `italic 700 ${nameFontSize}px 'Playfair Display', Georgia, serif`;
-      while (ctx.measureText(participantName).width > W - 360 && nameFontSize > 44) {
-        nameFontSize -= 2;
-        ctx.font = `italic 700 ${nameFontSize}px 'Playfair Display', Georgia, serif`;
-      }
-      ctx.fillStyle = "#002D62";
-      ctx.fillText(participantName, W / 2, 580);
-
-      ctx.fillStyle = "#334155";
-      ctx.font = "500 38px Inter, system-ui, sans-serif";
-      ctx.fillText("Por haber completado y aprobado el minicurso:", W / 2, 710);
-
-      ctx.fillStyle = "#002D62";
-      ctx.font = "700 58px Inter, system-ui, sans-serif";
-      ctx.fillText("Cómo y dónde denunciar actos de corrupción", W / 2, 805);
-
-      // 5. Dos columnas inferiores perfectamente niveladas (línea cian a la misma altura)
-      const leftX = 600;
-      const rightX = 1600;
-      const lineY = 1150;
-
-      // Columna izquierda: Fecha de Aprobación
-      ctx.fillStyle = "#002D62";
-      ctx.font = "500 34px Inter, system-ui, sans-serif";
-      ctx.fillText("Fecha de Aprobación", leftX, lineY - 78);
-
-      ctx.font = "700 38px Inter, system-ui, sans-serif";
-      ctx.fillText(appState.exam.dateFormatted || "--", leftX, lineY - 24);
-
-      ctx.fillStyle = "#009FE3";
-      ctx.fillRect(leftX - 240, lineY, 480, 4);
-
-      // Columna derecha: Acredita
-      ctx.fillStyle = "#002D62";
-      ctx.font = "500 34px Inter, system-ui, sans-serif";
-      ctx.fillText("Acredita:", rightX, lineY - 78);
-
-      ctx.font = "700 38px Inter, system-ui, sans-serif";
-      ctx.fillText("Jimena Zárate Manzanares", rightX, lineY - 24);
-
-      ctx.fillStyle = "#009FE3";
-      ctx.fillRect(rightX - 280, lineY, 560, 4);
-
-      ctx.fillStyle = "#002D62";
-      ctx.font = "500 31px Inter, system-ui, sans-serif";
-      ctx.fillText("Departamento de Estrategia e Innovación, RACSA", rightX, lineY + 52);
-
-      // 6. Pie discreto de verificación
-      ctx.fillStyle = "#cbd5e1";
-      ctx.fillRect(160, 1345, W - 320, 2);
-
-      const total = appState.exam.shuffledQuestions.length || EXAM_QUESTIONS.length;
+    // CERTIFICADO (HTML + PDF + CANVAS PNG PALETA RACSA SIN SELLO NI FIRMA)
+    function populateCertificate() {
+      const total = EXAM_QUESTIONS.length;
       const pct = Math.round((appState.exam.score / total) * 100);
-      ctx.fillStyle = "#475569";
-      ctx.font = "500 24px Inter, system-ui, sans-serif";
-
-      ctx.textAlign = "left";
-      ctx.fillText(`Calificación: ${appState.exam.score}/${total} (${pct}%)`, 160, 1396);
-
-      ctx.textAlign = "center";
-      ctx.fillText(`Código de verificación: ${appState.exam.verificationCode}`, W / 2, 1396);
-
-      ctx.textAlign = "right";
-      ctx.fillText(`Correo registrado: ${appState.user.email}`, W - 160, 1396);
-
-      // Volcar imagen exacta a la vista previa visible
-      const previewImg = document.getElementById("certificate-preview-img");
-      previewImg.src = canvas.toDataURL("image/png", 1.0);
+      document.getElementById("cert-user-name").textContent = appState.user.fullName;
+      document.getElementById("cert-date").textContent = appState.exam.dateFormatted;
+      document.getElementById("cert-score").textContent = `${appState.exam.score}/${total} (${pct}%)`;
+      document.getElementById("cert-code").textContent = appState.exam.verificationCode;
+      document.getElementById("cert-email").textContent = appState.user.email;
     }
 
     function printCertificatePDF() {
@@ -1592,11 +1471,131 @@
       window.print();
     }
 
-    async function downloadCertificatePNG() {
+    function downloadCertificatePNG() {
       try {
-        await renderCertificateCanvasAndPreview();
         const canvas = document.getElementById("certificate-canvas");
-        const participantName = appState.user.fullName || "Participante";
+        const ctx = canvas.getContext("2d");
+        const W = 1600;
+        const H = 1130;
+
+        // 1. Fondo blanco con trama guilloché sutil en azul claro
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(0, 45, 98, 0.035)";
+        ctx.lineWidth = 1.2;
+        for (let r = 80; r < 850; r += 26) {
+          ctx.beginPath();
+          ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 2. Marco institucional RACSA (azul marino + cian)
+        ctx.strokeStyle = "#002D62";
+        ctx.lineWidth = 18;
+        ctx.strokeRect(42, 42, W - 84, H - 84);
+
+        ctx.strokeStyle = "#009FE3";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(68, 68, W - 136, H - 136);
+
+        // Esquinas decorativas en cian
+        const cornerSize = 36;
+        ctx.strokeStyle = "#009FE3";
+        ctx.lineWidth = 4;
+        const drawCorner = (x, y, dx, dy) => {
+          ctx.beginPath();
+          ctx.moveTo(x, y + dy * cornerSize);
+          ctx.lineTo(x, y);
+          ctx.lineTo(x + dx * cornerSize, y);
+          ctx.stroke();
+        };
+        drawCorner(86, 86, 1, 1);
+        drawCorner(W - 86, 86, -1, 1);
+        drawCorner(86, H - 86, 1, -1);
+        drawCorner(W - 86, H - 86, -1, -1);
+
+        // 3. Título bicolor
+        ctx.font = "700 66px 'Playfair Display', Georgia, serif";
+        const t1 = "COMPROBANTE ";
+        const t2 = "DE PARTICIPACIÓN";
+        const w1 = ctx.measureText(t1).width;
+        const w2 = ctx.measureText(t2).width;
+        const startX = (W - (w1 + w2)) / 2;
+
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#002D62";
+        ctx.fillText(t1, startX, 240);
+        ctx.fillStyle = "#009FE3";
+        ctx.fillText(t2, startX + w1, 240);
+
+        // 4. Cuerpo central
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#002D62";
+        ctx.font = "italic 600 32px 'Playfair Display', Georgia, serif";
+        ctx.fillText("Otorgado a:", W / 2, 330);
+
+        const participantName = appState.user.fullName;
+        let nameFontSize = 72;
+        ctx.font = `italic 700 ${nameFontSize}px 'Playfair Display', Georgia, serif`;
+        while (ctx.measureText(participantName).width > W - 260 && nameFontSize > 34) {
+          nameFontSize -= 2;
+          ctx.font = `italic 700 ${nameFontSize}px 'Playfair Display', Georgia, serif`;
+        }
+        ctx.fillStyle = "#002D62";
+        ctx.fillText(participantName, W / 2, 435);
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "400 28px Inter, system-ui, sans-serif";
+        ctx.fillText("Por haber completado y aprobado el minicurso:", W / 2, 525);
+
+        ctx.fillStyle = "#002D62";
+        ctx.font = "700 42px Inter, system-ui, sans-serif";
+        ctx.fillText("Cómo y dónde denunciar actos de corrupción", W / 2, 595);
+
+        // 5. Dos columnas inferiores limpias (sin sello ni firma manuscrita)
+        const leftX = 430;
+        const rightX = 1170;
+
+        // Izquierda: Fecha de Aprobación
+        ctx.fillStyle = "#002D62";
+        ctx.font = "500 26px Inter, system-ui, sans-serif";
+        ctx.fillText("Fecha de Aprobación", leftX, 790);
+        ctx.font = "700 28px Inter, system-ui, sans-serif";
+        ctx.fillText(appState.exam.dateFormatted, leftX, 835);
+        ctx.fillStyle = "#009FE3";
+        ctx.fillRect(leftX - 180, 855, 360, 3);
+
+        // Derecha: Acredita
+        ctx.fillStyle = "#002D62";
+        ctx.font = "500 26px Inter, system-ui, sans-serif";
+        ctx.fillText("Acredita:", rightX, 790);
+        ctx.font = "700 28px Inter, system-ui, sans-serif";
+        ctx.fillText("Jimena Zárate Manzanares", rightX, 835);
+        ctx.fillStyle = "#009FE3";
+        ctx.fillRect(rightX - 210, 855, 420, 3);
+        ctx.fillStyle = "#002D62";
+        ctx.font = "500 22px Inter, system-ui, sans-serif";
+        ctx.fillText("Departamento de Estrategia e Innovación, RACSA", rightX, 895);
+
+        // 6. Pie de verificación
+        ctx.fillStyle = "#cbd5e1";
+        ctx.fillRect(115, 985, W - 230, 1.5);
+
+        const total = EXAM_QUESTIONS.length;
+        const pct = Math.round((appState.exam.score / total) * 100);
+        ctx.fillStyle = "#475569";
+        ctx.font = "500 17px Inter, system-ui, sans-serif";
+
+        ctx.textAlign = "left";
+        ctx.fillText(`Calificación: ${appState.exam.score}/${total} (${pct}%)`, 115, 1022);
+        ctx.textAlign = "center";
+        ctx.fillText(`Código de verificación: ${appState.exam.verificationCode}`, W / 2, 1022);
+        ctx.textAlign = "right";
+        ctx.fillText(`Correo registrado: ${appState.user.email}`, W - 115, 1022);
+
         const safeName = participantName
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
