@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minicurso: Cómo y dónde denunciar actos de corrupción | RACSA</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+
+  <script>
+    // Paleta institucional RACSA
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            serif: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
+          },
+          colors: {
+            navy: {
+              DEFAULT: '#002D62',
+              light: '#0a417d',
+              dark: '#001d40',
+            },
+            corp: {
+              DEFAULT: '#009FE3',
+              hover: '#0084bd',
+            },
+            ice: '#EBF3F9',
+            canvasbg: '#f4f7fa',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cert-aspect {
+      aspect-ratio: 1600 / 1130;
+    }
+
+    /* Trama guilloché sutil para el certificado */
+    .cert-guilloche {
+      background-color: #FFFFFF;
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(0, 159, 227, 0.05) 0%, transparent 65%),
+        repeating-radial-gradient(circle at 50% 50%, rgba(0, 45, 98, 0.025) 0, rgba(0, 45, 98, 0.025) 1px, transparent 1px, transparent 14px);
+    }
+
+    /* Contenedor exclusivo para imprimir solo el material didáctico */
+    #didactic-print-container {
+      display: none;
+    }
+
+    /* Reglas de impresión dinámicas según el modo (certificado horizontal vs material vertical) */
+    @media print {
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* MODO 1: IMPRESIÓN DE CERTIFICADO (HORIZONTAL) */
+      body.print-mode-cert .no-print,
+      body.print-mode-cert #didactic-print-container {
+        display: none !important;
+      }
+      body.print-mode-cert #section-4 {
+        display: block !important;
+      }
+      body.print-mode-cert #print-wrapper {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+      }
+      body.print-mode-cert #certificate-card {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+      }
+
+      /* MODO 2: IMPRESIÓN DE MATERIAL DIDÁCTICO (VERTICAL, SIN EXAMEN) */
+      body.print-mode-material header,
+      body.print-mode-material main,
+      body.print-mode-material footer,
+      body.print-mode-material #toast-container {
+        display: none !important;
+      }
+      body.print-mode-material #didactic-print-container {
+        display: block !important;
+        padding: 0 !important;
+        color: #1e293b !important;
+      }
+      body.print-mode-material .didactic-module-block {
+        page-break-inside: avoid;
+        margin-bottom: 24px;
+      }
+    }
+  </style>
+  <style id="dynamic-page-style"></style>
+</head>
+
+<body class="bg-canvasbg text-slate-800 font-sans antialiased min-h-screen flex flex-col print-mode-cert">
+
+  <!-- ENCABEZADO FIJO INSTITUCIONAL -->
+  <header id="app-header" class="no-print sticky top-0 z-40 bg-navy text-white shadow-md">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-corp" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 4v5c0 5.25-3.4 9.74-8 11-4.6-1.26-8-5.75-8-11V7l8-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-wider text-sky-200 font-semibold">
+              Departamento de Estrategia e Innovación · RACSA
+            </p>
+            <h1 class="text-sm sm:text-base font-bold leading-tight text-white">
+              Cómo y dónde denunciar actos de corrupción
+            </h1>
+          </div>
+        </div>
+
+        <div id="header-user-badge" class="hidden items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full text-xs text-sky-100 self-start sm:self-auto">
+          <svg class="w-4 h-4 text-corp shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span id="header-user-name" class="font-medium truncate max-w-[180px]"></span>
+        </div>
+      </div>
+
+      <!-- Barra de progreso de 4 pasos -->
+      <nav aria-label="Progreso del curso" class="mt-3.5 pt-3 border-t border-white/15">
+        <ol class="grid grid-cols-4 gap-1.5 sm:gap-3">
+          <li>
+            <button type="button" onclick="navigateToStep(1)" id="step-btn-1"
+              class="step-pill w-full flex items-center justify-center sm:justify-start gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+              <span class="step-num w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0">1</span>
+              <span class="truncate hidden xs:inline sm:inline">Registro</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="navigateToStep(2)" id="step-btn-2"
+              class="step-pill w-full flex items-center justify-center sm:justify-start gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+              <span class="step-num w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0">2</span>
+              <span class="truncate hidden xs:inline sm:inline">Minicurso</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="navigateToStep(3)" id="step-btn-3"
+              class="step-pill w-full flex items-center justify-center sm:justify-start gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+              <span class="step-num w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0">3</span>
+              <span class="truncate hidden xs:inline sm:inline">Examen</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="navigateToStep(4)" id="step-btn-4"
+              class="step-pill w-full flex items-center justify-center sm:justify-start gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+              <span class="step-num w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0">4</span>
+              <span class="truncate hidden xs:inline sm:inline">Comprobante</span>
+            </button>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <div id="toast-container" class="no-print fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-[calc(100%-2.5rem)] pointer-events-none"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- SECCIÓN 1: REGISTRO -->
+    <section id="section-1" class="no-print fade-in">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-4">
+            <span class="w-2 h-2 rounded-full bg-corp"></span>
+            Paso 1 de 4 · Registro de Participante
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-navy tracking-tight">
+            Bienvenido al Minicurso Institucional
+          </h2>
+          <p class="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
+            Ingresa tus datos para iniciar el recorrido formativo sobre <strong>Cómo y dónde denunciar actos de corrupción</strong>. Al aprobar la evaluación final podrás descargar tu Comprobante de Participación.
+          </p>
+
+          <form id="registration-form" class="mt-6 space-y-5" novalidate>
+            <div>
+              <label for="input-fullname" class="block text-sm font-semibold text-navy mb-1.5">
+                Nombre completo <span class="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                id="input-fullname"
+                name="fullname"
+                autocomplete="name"
+                placeholder="Ej. María Fernanda Solís Quesada"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-corp focus:border-corp transition"
+                required
+              />
+              <p class="mt-1.5 text-xs text-slate-500">
+                Se imprimirá exactamente como lo escribas en tu Comprobante de Participación.
+              </p>
+              <p id="error-fullname" class="hidden mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1.5"></p>
+            </div>
+
+            <div>
+              <label for="input-email" class="block text-sm font-semibold text-navy mb-1.5">
+                Correo electrónico de Gmail <span class="text-red-600">*</span>
+              </label>
+              <input
+                type="email"
+                id="input-email"
+                name="email"
+                autocomplete="email"
+                placeholder="ejemplo@gmail.com"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-corp focus:border-corp transition"
+                required
+              />
+              <p class="mt-1.5 text-xs text-slate-500">
+                Debe ser una cuenta válida terminada en <strong>@gmail.com</strong>.
+              </p>
+              <p id="error-email" class="hidden mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1.5"></p>
+            </div>
+
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-corp hover:bg-corp-hover text-white font-semibold px-6 py-3.5 rounded-xl shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-corp"
+              >
+                <span>Comenzar Minicurso</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="lg:col-span-5 space-y-4">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6">
+            <h3 class="text-base font-bold text-navy flex items-center gap-2">
+              <svg class="w-5 h-5 text-corp" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Información del Minicurso
+            </h3>
+            <ul class="mt-4 space-y-3.5 text-sm text-slate-600">
+              <li class="flex items-start gap-3">
+                <span class="w-8 h-8 rounded-lg bg-ice text-navy flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-corp" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </span>
+                <div>
+                  <p class="font-semibold text-navy">Duración estimada</p>
+                  <p class="text-xs text-slate-500">10 a 15 minutos a tu propio ritmo.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-8 h-8 rounded-lg bg-ice text-navy flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-corp" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </span>
+                <div>
+                  <p class="font-semibold text-navy">Estructura académica</p>
+                  <p class="text-xs text-slate-500">4 módulos breves (exportables a PDF) + examen de 8 preguntas.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-8 h-8 rounded-lg bg-ice text-navy flex items-center justify-center shrink-0">
+                  <svg class="w-4 h-4 text-corp" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </span>
+                <div>
+                  <p class="font-semibold text-navy">Criterio de aprobación</p>
+                  <p class="text-xs text-slate-500">Nota mínima de 80% (al menos 7 de 8 aciertos) para emitir el Comprobante de Participación.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-navy text-white rounded-2xl shadow-sm p-6">
+            <p class="text-[11px] uppercase tracking-wider text-corp font-semibold">Fuente Oficial de Contenido</p>
+            <h4 class="mt-1 text-sm font-bold leading-snug">
+              Ponencia de la Mag. Tatiana Gutiérrez Delgado
+            </h4>
+            <p class="mt-1.5 text-xs text-slate-300 leading-relaxed">
+              Procuraduría de la Ética Pública · Procuraduría General de la República de Costa Rica.
+            </p>
+            <a
+              href="https://www.youtube.com/watch?v=Rf3RMzBpADI"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-4 w-full inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition"
+            >
+              <svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <span>Ver charla original en YouTube</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: MINICURSO INTERACTIVO -->
+    <section id="section-2" class="no-print hidden fade-in">
+      <!-- Barra superior de módulos + botón exportar PDF solo material didáctico -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-3 sm:p-4 mb-5 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2 border-b border-slate-100">
+          <p class="text-xs font-semibold text-navy uppercase tracking-wider">
+            Material Didáctico · 4 Módulos
+          </p>
+          <button
+            type="button"
+            onclick="exportDidacticMaterialPDF()"
+            class="inline-flex items-center justify-center gap-2 bg-ice hover:bg-sky-100 text-navy border border-corp/40 font-semibold text-xs px-3.5 py-2 rounded-lg transition"
+          >
+            <svg class="w-4 h-4 text-corp" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Exportar Material Didáctico (PDF)</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2" role="tablist" aria-label="Módulos del minicurso">
+          <button type="button" onclick="selectModule(0)" id="mod-tab-0" role="tab"
+            class="mod-tab text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border">
+            <span class="block text-[10px] uppercase tracking-wider opacity-75">Módulo 1</span>
+            <span class="truncate block">Qué es la corrupción</span>
+          </button>
+          <button type="button" onclick="selectModule(1)" id="mod-tab-1" role="tab"
+            class="mod-tab text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border">
+            <span class="block text-[10px] uppercase tracking-wider opacity-75">Módulo 2</span>
+            <span class="truncate block">Denuncia de calidad</span>
+          </button>
+          <button type="button" onclick="selectModule(2)" id="mod-tab-2" role="tab"
+            class="mod-tab text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border">
+            <span class="block text-[10px] uppercase tracking-wider opacity-75">Módulo 3</span>
+            <span class="truncate block">Dónde denunciar</span>
+          </button>
+          <button type="button" onclick="selectModule(3)" id="mod-tab-3" role="tab"
+            class="mod-tab text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border">
+            <span class="block text-[10px] uppercase tracking-wider opacity-75">Módulo 4</span>
+            <span class="truncate block">Protección legal</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenedor de módulos -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-8">
+
+        <!-- MÓDULO 1 -->
+        <article id="module-content-0" class="module-pane space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Módulo 1 de 4</span>
+            <h2 class="text-2xl font-bold text-navy">¿Qué es la corrupción y qué se denuncia?</h2>
+          </div>
+
+          <div class="bg-ice/70 border-l-4 border-corp rounded-r-xl p-5">
+            <h3 class="text-sm font-bold uppercase tracking-wide text-navy mb-1.5">
+              Definición Legal (Reglamento de la Ley contra la Corrupción y el Enriquecimiento Ilícito)
+            </h3>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+              Es el <strong>uso indebido del poder y de los recursos públicos</strong> para beneficio personal, político particular o de terceros, en contravención de la normativa vigente. Esta definición se alinea con estándares internacionales de organismos como <em>Transparencia Internacional</em>, el <em>Banco Mundial</em> y el <em>Fondo Monetario Internacional (FMI)</em>.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-navy mb-3">Diferenciación clave: ¿Qué sí y qué no es corrupción?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-5">
+                <div class="flex items-center gap-2 text-emerald-800 font-bold text-sm mb-3">
+                  <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">✓</span>
+                  SÍ constituye denuncia de corrupción
+                </div>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li class="flex items-start gap-2"><span class="text-emerald-600 font-bold">•</span> Tráfico de influencias.</li>
+                  <li class="flex items-start gap-2"><span class="text-emerald-600 font-bold">•</span> Solicitar o aceptar dádivas a cambio de favorecer gestiones.</li>
+                  <li class="flex items-start gap-2"><span class="text-emerald-600 font-bold">•</span> Enriquecimiento ilícito.</li>
+                  <li class="flex items-start gap-2"><span class="text-emerald-600 font-bold">•</span> Uso indebido de recursos públicos para beneficio privado (vehículos oficiales, personal, insumos).</li>
+                  <li class="flex items-start gap-2"><span class="text-emerald-600 font-bold">•</span> Actuar en conflicto de intereses.</li>
+                  <li class="flex items-start gap-2"><span class="text-emerald-600 font-bold">•</span> Soborno transnacional.</li>
+                </ul>
+              </div>
+
+              <div class="rounded-xl border border-amber-200 bg-amber-50/50 p-5">
+                <div class="flex items-center gap-2 text-amber-900 font-bold text-sm mb-3">
+                  <span class="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">✕</span>
+                  NO es denuncia de corrupción
+                </div>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li class="flex items-start gap-2"><span class="text-amber-600 font-bold">•</span> Faltas laborales ordinarias (llegadas tardías, ausencias, desobediencias comunes).</li>
+                  <li class="flex items-start gap-2"><span class="text-amber-600 font-bold">•</span> Cuestionamientos de legalidad ordinaria (vicios de procedimiento en permisos o concursos).</li>
+                  <li class="flex items-start gap-2"><span class="text-amber-600 font-bold">•</span> Reclamos estrictamente de interés personal.</li>
+                  <li class="flex items-start gap-2"><span class="text-amber-600 font-bold">•</span> Quejas por mala gestión administrativa, retrasos o ineficiencia en la atención.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-navy text-white rounded-xl p-5 flex items-start gap-3.5">
+            <div class="w-9 h-9 rounded-lg bg-corp/25 text-corp flex items-center justify-center shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+            </div>
+            <div>
+              <p class="font-bold text-sm text-sky-300">Derecho vs. Obligación Legal</p>
+              <p class="mt-1 text-sm text-slate-200 leading-relaxed">
+                Para la <strong>ciudadanía en general</strong>, denunciar actos de corrupción es un <strong>derecho</strong>. Para las <strong>personas funcionarias públicas</strong>, denunciar los hechos de corrupción que conozcan en el ejercicio de sus funciones es una <strong>obligación legal</strong> propia de su cargo.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- MÓDULO 2 -->
+        <article id="module-content-1" class="module-pane hidden space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Módulo 2 de 4</span>
+            <h2 class="text-2xl font-bold text-navy">Cómo presentar una denuncia de calidad</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+              <p class="text-xs font-bold uppercase text-corp">Accesible y gratuita</p>
+              <p class="mt-1 text-sm text-slate-700">No tiene costo alguno ni requiere patrocinio ni firma de un abogado.</p>
+            </div>
+            <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+              <p class="text-xs font-bold uppercase text-corp">Sin formalidades estrictas</p>
+              <p class="mt-1 text-sm text-slate-700">No exige lenguaje técnico ni formatos rígidos de escritura pública.</p>
+            </div>
+            <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+              <p class="text-xs font-bold uppercase text-corp">Múltiples canales</p>
+              <p class="mt-1 text-sm text-slate-700">Puede interponerse por escrito, de forma verbal o por medios electrónicos oficiales.</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-sky-200 bg-ice/60 p-5">
+            <h3 class="text-base font-bold text-navy mb-2">Identificación vs. Anonimato</h3>
+            <p class="text-sm text-slate-700 leading-relaxed">
+              Las denuncias <strong>anónimas son admitidas</strong> siempre que aporten elementos claros y suficientes para investigar. No obstante, <strong>se recomienda identificarse</strong> (nombre, cédula y correo electrónico) por dos razones clave:
+            </p>
+            <ul class="mt-3 space-y-1.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2"><span class="text-corp font-bold">1.</span> Permite recibir notificaciones sobre el resultado de la gestión e interponer recursos si corresponde.</li>
+              <li class="flex items-start gap-2"><span class="text-corp font-bold">2.</span> Permite acreditar la condición de denunciante en caso de requerir protección legal contra represalias laborales.</li>
+            </ul>
+            <p class="mt-3 text-xs font-semibold text-navy bg-white/80 inline-block px-3 py-1.5 rounded-lg border border-sky-100">
+              Nota: La identidad de la persona denunciante es estrictamente confidencial por ley.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-navy mb-3">Fórmula para una denuncia efectiva</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-3">
+              <div class="rounded-xl bg-navy text-white p-3 text-center">
+                <p class="font-bold text-sm text-corp">¿Qué?</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Hecho irregular</p>
+              </div>
+              <div class="rounded-xl bg-navy text-white p-3 text-center">
+                <p class="font-bold text-sm text-corp">¿Cómo?</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Modo en que ocurrió</p>
+              </div>
+              <div class="rounded-xl bg-navy text-white p-3 text-center">
+                <p class="font-bold text-sm text-corp">¿Cuándo?</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Fechas aproximadas</p>
+              </div>
+              <div class="rounded-xl bg-navy text-white p-3 text-center">
+                <p class="font-bold text-sm text-corp">¿Dónde?</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Lugar o dependencia</p>
+              </div>
+              <div class="rounded-xl bg-navy text-white p-3 text-center col-span-2 sm:col-span-1">
+                <p class="font-bold text-sm text-corp">¿Quién?</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Nombres y cargos</p>
+              </div>
+            </div>
+            <p class="text-sm text-slate-600">
+              Además, es fundamental <strong>aportar las pruebas disponibles</strong> o indicar con claridad dónde se ubican y quién las custodia, así como señalar posibles <strong>testigos</strong>.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-navy mb-3">Ejemplo práctico comparativo</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl border border-red-200 bg-red-50/50 p-4">
+                <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-red-100 text-red-700 mb-2">
+                  Denuncia genérica (Riesgo de rechazo)
+                </span>
+                <p class="text-sm italic text-slate-700">
+                  "Hubo tráfico de influencias en la aprobación del permiso de la empresa RZP."
+                </p>
+                <p class="mt-2.5 text-xs text-red-700">
+                  Carece de personas, fechas, institución y hechos verificables; podría ser rechazada en la etapa de admisibilidad.
+                </p>
+              </div>
+
+              <div class="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4">
+                <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 mb-2">
+                  Denuncia fundamentada (Efectiva)
+                </span>
+                <p class="text-sm italic text-slate-700">
+                  "En la institución X, el subalterno [Nombre] presionó a la jefatura [Nombre] en [Fecha] para aprobar el permiso de la empresa RZP, propiedad de su familiar, pese a incumplir el requisito técnico [Detalle], lo cual consta en el expediente N.°..."
+                </p>
+                <p class="mt-2.5 text-xs text-emerald-800">
+                  Aporta hechos concretos, personas involucradas, vínculo y evidencia para iniciar una investigación eficaz.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- MÓDULO 3 -->
+        <article id="module-content-2" class="module-pane hidden space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Módulo 3 de 4</span>
+            <h2 class="text-2xl font-bold text-navy">¿Dónde denunciar y cuál es el procedimiento?</h2>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-base font-bold text-navy">Instancias receptoras según la naturaleza del hecho</h3>
+
+            <div class="rounded-xl border border-slate-200 overflow-hidden">
+              <div class="bg-navy text-white px-5 py-3 flex items-center justify-between">
+                <span class="font-bold text-sm">1. Vía Administrativa (Faltas disciplinarias o civiles)</span>
+                <span class="text-[11px] bg-white/15 px-2.5 py-0.5 rounded-full">Sector Público</span>
+              </div>
+              <div class="p-5 space-y-3 bg-white">
+                <ol class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                  <li class="p-3.5 rounded-xl bg-ice/60 border border-sky-200">
+                    <span class="font-bold text-navy block">1. Institución donde labora el funcionario</span>
+                    <span class="text-xs text-slate-600">Primera opción recomendada: posee canal interno y potestad disciplinaria directa.</span>
+                  </li>
+                  <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="font-bold text-navy block">2. Auditoría Interna</span>
+                    <span class="text-xs text-slate-600">Órgano independiente de fiscalización dentro de la misma institución.</span>
+                  </li>
+                  <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="font-bold text-navy block">3. Contraloría General de la República</span>
+                    <span class="text-xs text-slate-600">Uso y manejo de recursos públicos y sistema de fiscalización superior.</span>
+                  </li>
+                  <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="font-bold text-navy block">4. Procuraduría de la Ética Pública</span>
+                    <span class="text-xs text-slate-600">Beneficios ilegítimos, conflictos de intereses y violaciones al deber de probidad.</span>
+                  </li>
+                </ol>
+                <div class="text-xs text-navy bg-ice/60 px-4 py-2.5 rounded-lg border border-sky-200">
+                  <strong>Buena práctica recomendada:</strong> Elegir <strong>una sola instancia</strong> y esperar sus resultados, evitando duplicar esfuerzos para usar eficientemente los recursos públicos.
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl border border-slate-200 p-5 bg-slate-50/70">
+                <span class="inline-block text-[11px] font-bold uppercase text-red-700 bg-red-100 px-2.5 py-0.5 rounded mb-2">2. Vía Penal (Delitos)</span>
+                <h4 class="font-bold text-navy text-sm">Ministerio Público y OIJ</h4>
+                <p class="mt-1.5 text-sm text-slate-600 leading-relaxed">
+                  Cuando los hechos configuran presuntos delitos penales (como cohecho, peculado, enriquecimiento ilícito o tráfico de influencias), se denuncia ante el <strong>Ministerio Público</strong> y eventualmente ante el <strong>Organismo de Investigación Judicial (OIJ)</strong>.
+                </p>
+              </div>
+
+              <div class="rounded-xl border border-slate-200 p-5 bg-slate-50/70">
+                <span class="inline-block text-[11px] font-bold uppercase text-navy bg-ice px-2.5 py-0.5 rounded mb-2">3. Sector Privado (Ley N.° 10.437)</span>
+                <h4 class="font-bold text-navy text-sm">Canal interno obligatorio</h4>
+                <p class="mt-1.5 text-sm text-slate-600 leading-relaxed">
+                  Las personas empleadoras con <strong>más de 50 trabajadores</strong> deben habilitar un canal interno de denuncias de fácil acceso, publicitado periódicamente, electrónico y con <strong>opción anónima</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-navy mb-3">Procedimiento Administrativo (Arts. 8 al 26 del Reglamento)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="rounded-xl border border-slate-200 p-4">
+                <span class="text-xs font-bold text-corp">Fase 1</span>
+                <h4 class="font-bold text-navy text-sm mt-0.5">Admisibilidad</h4>
+                <p class="text-xs text-slate-600 mt-1">Se verifica competencia, claridad de los hechos y elementos mínimos para tramitar.</p>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <span class="text-xs font-bold text-corp">Fase 2</span>
+                <h4 class="font-bold text-navy text-sm mt-0.5">Investigación preliminar</h4>
+                <p class="text-xs text-slate-600 mt-1">Recopilación de pruebas, entrevistas y análisis técnico para determinar mérito.</p>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <span class="text-xs font-bold text-corp">Fase 3</span>
+                <h4 class="font-bold text-navy text-sm mt-0.5">Fase conclusiva</h4>
+                <p class="text-xs text-slate-600 mt-1">Emisión del informe o resolución final (archivo, desestimación o apertura de proceso).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-ice/60 border border-sky-200 rounded-xl p-5">
+            <h3 class="text-sm font-bold text-navy mb-2">Derechos de la persona denunciante</h3>
+            <ul class="space-y-1.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2"><span class="text-corp font-bold">✓</span> Recibir información oportuna sobre el resultado del trámite (rechazo, desestimación o determinación de mérito).</li>
+              <li class="flex items-start gap-2"><span class="text-corp font-bold">✓</span> Presentar recurso de revocatoria o apelación en caso de rechazo, archivo o desestimación.</li>
+              <li class="flex items-start gap-2"><span class="text-corp font-bold">✓</span> Garantía absoluta de confidencialidad sobre su identidad.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- MÓDULO 4 -->
+        <article id="module-content-3" class="module-pane hidden space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Módulo 4 de 4</span>
+            <h2 class="text-2xl font-bold text-navy">Mecanismos de protección para denunciantes y testigos</h2>
+            <p class="mt-1 text-sm text-slate-600">El sistema costarricense contempla tres pilares fundamentales para resguardar a quienes denuncian o testifican.</p>
+          </div>
+
+          <div class="rounded-xl border border-slate-200 p-5 bg-white shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-8 h-8 rounded-lg bg-navy text-corp font-bold flex items-center justify-center text-sm shrink-0">1</span>
+              <h3 class="text-base font-bold text-navy">Confidencialidad de la identidad</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">
+              Aplica tanto en el <strong>sector público como en el privado</strong>, durante el trámite e incluso <strong>después de concluido y archivado el expediente</strong>.
+            </p>
+            <div class="mt-3 p-3.5 rounded-lg bg-amber-50 border border-amber-200 text-xs sm:text-sm text-amber-950">
+              <strong>Única excepción legal:</strong> Solicitud expresa de un <strong>juez penal</strong> ante la posible existencia de un delito contra el honor de la persona denunciada. Revelar la identidad fuera de esta excepción genera responsabilidad <strong>administrativa, civil y penal</strong>.
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-sky-200 p-5 bg-ice/40 shadow-sm">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="w-8 h-8 rounded-lg bg-corp text-white font-bold flex items-center justify-center text-sm shrink-0">2</span>
+              <div>
+                <h3 class="text-base font-bold text-navy">Protección contra represalias laborales (Ley N.° 10.437)</h3>
+                <p class="text-xs text-corp font-semibold">Vigente en Costa Rica desde febrero de 2024</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-700">
+              <div class="bg-white rounded-lg p-3.5 border border-sky-100">
+                <p class="font-bold text-navy text-xs uppercase mb-1">Alcance amplio</p>
+                <p class="text-xs sm:text-sm">Protege a denunciantes y testigos (procesos administrativos, penales y denuncias públicas bajo creencia razonable) en sector público y privado, e incluso a familiares o terceros vinculados en el mismo contexto laboral.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3.5 border border-sky-100">
+                <p class="font-bold text-navy text-xs uppercase mb-1">Qué cubre</p>
+                <p class="text-xs sm:text-sm">Represalias consumadas y también <strong>amenazas</strong> (despido, suspensión, descenso, cambio desfavorable de funciones/horario/teletrabajo, evaluaciones negativas o medidas disciplinarias), ejecutadas por el empleador, representantes o terceros a su nombre.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3.5 border border-sky-100">
+                <p class="font-bold text-navy text-xs uppercase mb-1">¿Dónde reclamar?</p>
+                <p class="text-xs sm:text-sm">Ante los <strong>Juzgados de Trabajo</strong>. Se cuenta con asistencia legal gratuita en la <strong>Unidad Laboral de la Defensa Pública</strong>.</p>
+              </div>
+              <div class="bg-white rounded-lg p-3.5 border border-sky-100">
+                <p class="font-bold text-navy text-xs uppercase mb-1">Beneficios y vigencia</p>
+                <p class="text-xs sm:text-sm">Medidas cautelares (reinstalación, reubicación), indemnización por daños y perjuicios, régimen sancionatorio grave y cobertura <strong>sin plazo fijo</strong> desde la denuncia o citación hasta la resolución final.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-200 p-5 bg-white shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="w-8 h-8 rounded-lg bg-navy text-corp font-bold flex items-center justify-center text-sm shrink-0">3</span>
+              <h3 class="text-base font-bold text-navy">Protección en sede penal</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">
+              Regulada por la <strong>Ley de Protección a Víctimas, Testigos y demás Sujetos Intervinientes en el Proceso Penal</strong>. Ofrece tanto <strong>medidas procesales</strong> (reserva de identidad y características físicas durante el proceso) como <strong>medidas extraprocesales</strong> ante riesgos graves contra la vida o la integridad física.
+            </p>
+          </div>
+        </article>
+
+        <!-- Barra de navegación inferior del minicurso -->
+        <div class="mt-8 pt-5 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <button
+            type="button"
+            id="btn-mod-prev"
+            onclick="changeModule(-1)"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-sm transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Módulo Anterior</span>
+          </button>
+
+          <span id="mod-counter" class="text-xs font-semibold text-slate-500">Módulo 1 de 4</span>
+
+          <div class="w-full sm:w-auto flex gap-2">
+            <button
+              type="button"
+              id="btn-mod-next"
+              onclick="changeModule(1)"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-corp hover:bg-corp-hover text-white font-semibold text-sm shadow-sm transition"
+            >
+              <span>Siguiente Módulo</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              id="btn-go-exam"
+              onclick="startExam()"
+              class="hidden w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition"
+            >
+              <span>Ir al Examen de Aprobación</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: EXAMEN DE APROBACIÓN -->
+    <section id="section-3" class="no-print hidden fade-in space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full bg-ice text-navy text-xs font-semibold mb-2">Paso 3 de 4 · Evaluación</span>
+          <h2 class="text-2xl font-bold text-navy">Examen de Aprobación</h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Responde las 8 preguntas de selección única. Requieres al menos <strong>7 respuestas correctas (80%)</strong> para aprobar y obtener tu Comprobante de Participación.
+          </p>
+        </div>
+        <div class="shrink-0 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-center">
+          <p class="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Respondidas</p>
+          <p id="exam-answered-count" class="text-xl font-bold text-navy">0 / 8</p>
+        </div>
+      </div>
+
+      <div id="exam-result-banner" class="hidden rounded-2xl p-6 border shadow-sm"></div>
+
+      <form id="exam-form" class="space-y-4" novalidate>
+        <div id="questions-container" class="space-y-4"></div>
+
+        <div id="exam-submit-bar" class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <button
+            type="button"
+            onclick="navigateToStep(2)"
+            class="w-full sm:w-auto text-sm font-semibold text-slate-600 hover:text-navy px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 transition"
+          >
+            Volver a repasar el Minicurso
+          </button>
+          <button
+            type="submit"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-corp hover:bg-corp-hover text-white font-bold px-7 py-3 rounded-xl shadow-sm transition"
+          >
+            <span>Calificar Examen</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- SECCIÓN 4: COMPROBANTE DE PARTICIPACIÓN (PALETA RACSA, LIMPIO SIN SELLO NI LAZO) -->
+    <section id="section-4" class="hidden fade-in space-y-6">
+      <div id="cert-intro" class="no-print bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Minicurso Aprobado
+          </span>
+          <h2 class="text-2xl font-bold text-navy">Tu Comprobante de Participación</h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Puedes descargarlo como imagen de alta resolución (PNG) o imprimirlo / guardarlo en formato PDF horizontal.
+          </p>
+        </div>
+
+        <div id="cert-actions" class="flex flex-col sm:flex-row gap-2.5 shrink-0">
+          <button
+            type="button"
+            onclick="downloadCertificatePNG()"
+            class="inline-flex items-center justify-center gap-2 bg-navy hover:bg-navy-light text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-sm transition"
+          >
+            <svg class="w-4 h-4 text-corp" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Descargar como Imagen (PNG)</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="printCertificatePDF()"
+            class="inline-flex items-center justify-center gap-2 bg-corp hover:bg-corp-hover text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-sm transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            <span>Imprimir / Guardar como PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vista previa imprimible del Certificado -->
+      <div id="print-wrapper" class="flex justify-center">
+        <div
+          id="certificate-card"
+          class="cert-aspect w-full max-w-[960px] bg-white rounded-xl shadow-xl overflow-hidden relative p-3 sm:p-5 md:p-6 select-none"
+        >
+          <!-- Marco institucional RACSA (azul marino + doble línea cian) -->
+          <div class="w-full h-full border-[6px] sm:border-[8px] border-navy p-1.5 sm:p-2 relative">
+            <div class="w-full h-full border-2 border-corp relative flex flex-col justify-between px-6 sm:px-12 md:px-16 py-6 sm:py-9 md:py-11 cert-guilloche">
+
+              <!-- Adornos de esquina en cian corporativo -->
+              <span class="absolute top-2 left-2 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-l-2 border-corp"></span>
+              <span class="absolute top-2 right-2 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-r-2 border-corp"></span>
+              <span class="absolute bottom-2 left-2 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-l-2 border-corp"></span>
+              <span class="absolute bottom-2 right-2 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-r-2 border-corp"></span>
+
+              <!-- Título bicolor -->
+              <div class="text-center pt-1 sm:pt-3">
+                <h3 class="font-serif text-xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                  <span class="text-navy">COMPROBANTE</span> <span class="text-corp">DE PARTICIPACIÓN</span>
+                </h3>
+              </div>
+
+              <!-- Cuerpo central -->
+              <div class="text-center my-auto py-2">
+                <p class="font-serif italic text-xs sm:text-base text-navy/90">
+                  Otorgado a:
+                </p>
+                <p id="cert-user-name" class="mt-1 sm:mt-2 font-serif italic text-2xl sm:text-4xl md:text-5xl font-bold text-navy px-2 break-words">
+                  Nombre del Participante
+                </p>
+                <p class="mt-3 sm:mt-5 text-xs sm:text-base text-slate-700">
+                  Por haber completado y aprobado el minicurso:
+                </p>
+                <p class="mt-1 sm:mt-2 text-sm sm:text-xl md:text-2xl font-bold text-navy">
+                  Cómo y dónde denunciar actos de corrupción
+                </p>
+              </div>
+
+              <!-- Dos columnas inferiores limpias (sin sello ni firma manuscrita) -->
+              <div class="pt-2 sm:pt-4">
+                <div class="grid grid-cols-2 gap-6 sm:gap-12 items-end max-w-3xl mx-auto">
+                  <!-- Izquierda: Fecha de Aprobación -->
+                  <div class="text-center">
+                    <p class="text-[10px] sm:text-sm font-medium text-navy">Fecha de Aprobación</p>
+                    <p id="cert-date" class="mt-0.5 text-xs sm:text-base font-semibold text-navy">--</p>
+                    <div class="mt-1.5 w-36 sm:w-56 h-[2px] bg-corp mx-auto"></div>
+                  </div>
+
+                  <!-- Derecha: Acredita -->
+                  <div class="text-center">
+                    <p class="text-[10px] sm:text-sm font-medium text-navy">Acredita:</p>
+                    <p class="mt-0.5 text-xs sm:text-base font-bold text-navy">Jimena Zárate Manzanares</p>
+                    <div class="my-1.5 w-40 sm:w-64 h-[2px] bg-corp mx-auto"></div>
+                    <p class="text-[9px] sm:text-xs font-medium text-navy/90 leading-snug">
+                      Departamento de Estrategia e Innovación, RACSA
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Pie discreto de verificación -->
+                <div class="mt-4 sm:mt-6 pt-2 border-t border-slate-200/90 flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5 text-[8px] sm:text-[10px] text-slate-500">
+                  <span>Calificación: <strong id="cert-score" class="text-navy">--</strong></span>
+                  <span>Código de verificación: <strong id="cert-code" class="text-navy font-mono">--</strong></span>
+                  <span>Correo registrado: <strong id="cert-email" class="text-navy">--</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canvas oculto de alta resolución (1600x1130 px) -->
+      <canvas id="certificate-canvas" width="1600" height="1130" class="hidden"></canvas>
+    </section>
+  </main>
+
+  <!-- CONTENEDOR OCULTO EXCLUSIVO PARA EXPORTAR A PDF EL MATERIAL DIDÁCTICO (SIN EXAMEN) -->
+  <div id="didactic-print-container"></div>
+
+  <footer class="no-print mt-auto border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-500 px-4">
+    Departamento de Estrategia e Innovación, RACSA · Basado en la ponencia de la Procuraduría de la Ética Pública (PGR Costa Rica).
+  </footer>
+
+  <script>
+    const GOOGLE_SHEETS_WEBHOOK_URL = "";
+
+    async function enviarRegistroAGoogleSheets(datos) {
+      if (!GOOGLE_SHEETS_WEBHOOK_URL || GOOGLE_SHEETS_WEBHOOK_URL.trim() === "") return;
+      try {
+        await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+      } catch (err) {
+        console.warn("No se pudo enviar el registro a Google Sheets:", err);
+      }
+    }
+
+    const EXAM_QUESTIONS = [
+      {
+        id: 1,
+        question: "Según el Reglamento de la Ley contra la Corrupción y el Enriquecimiento Ilícito, ¿cómo se define la corrupción?",
+        options: [
+          "El uso indebido del poder y de los recursos públicos para beneficio personal, político particular o de terceros, en contravención de la normativa.",
+          "Cualquier retraso o ineficiencia administrativa en la atención al ciudadano.",
+          "Exclusivamente los delitos sancionados con pena de prisión en el sector privado.",
+          "Todo incumplimiento de horarios o llegadas tardías de un servidor público."
+        ],
+        correctIndex: 0,
+        explanation: "El Reglamento define la corrupción como el uso indebido del poder y de los recursos públicos para beneficio personal, político particular o de terceros, en contravención de la normativa vigente."
+      },
+      {
+        id: 2,
+        question: "¿Cuál de las siguientes situaciones NO corresponde a una denuncia por actos de corrupción?",
+        options: [
+          "Uso de un vehículo institucional o personal público para fines privados.",
+          "Tráfico de influencias o actuación en conflicto de intereses.",
+          "Llegadas tardías, desobediencias laborales ordinarias o quejas por retrasos en un trámite.",
+          "Solicitar o aceptar dádivas a cambio de favorecer una gestión."
+        ],
+        correctIndex: 2,
+        explanation: "Las faltas laborales ordinarias (llegadas tardías, desobediencias) y las quejas por retrasos o ineficiencia no constituyen actos de corrupción."
+      },
+      {
+        id: 3,
+        question: "Respecto a las formalidades para interponer una denuncia de actos de corrupción, es correcto afirmar que:",
+        options: [
+          "Requiere obligatoriamente la firma y patrocinio de un abogado.",
+          "Es gratuita, no exige formalidades estrictas y puede presentarse por escrito, verbalmente o por medios electrónicos.",
+          "Solo puede presentarse de forma presencial mediante escritura pública.",
+          "Tiene un costo administrativo si se presenta ante instancias externas."
+        ],
+        correctIndex: 1,
+        explanation: "La denuncia es completamente gratuita, no requiere patrocinio de un abogado ni formalidades estrictas, y admite vía escrita, verbal o electrónica."
+      },
+      {
+        id: 4,
+        question: "Aunque se admiten denuncias anónimas con elementos suficientes, ¿por qué resulta recomendable identificarse al denunciar?",
+        options: [
+          "Porque las denuncias anónimas están prohibidas por ley en Costa Rica.",
+          "Para que el nombre del denunciante se publique en el expediente público.",
+          "Porque permite recibir información del resultado del trámite y acreditar la condición de denunciante para pedir protección contra represalias, manteniendo la identidad confidencial.",
+          "Porque es la única forma de que la institución inicie una investigación preliminar."
+        ],
+        correctIndex: 2,
+        explanation: "Identificarse permite recibir notificaciones del resultado y acreditar la condición de denunciante para solicitar protección contra represalias laborales, todo bajo estricta confidencialidad."
+      },
+      {
+        id: 5,
+        question: "Para denunciar una falta administrativa cometida por un servidor público, ¿cuál es la primera instancia recomendada y qué buena práctica se sugiere?",
+        options: [
+          "La propia institución donde labora el funcionario (canal interno), eligiendo una sola instancia y esperando resultados para usar eficientemente los recursos.",
+          "Presentar exactamente la misma denuncia de forma simultánea ante cinco instituciones distintas.",
+          "Acudir directamente a los Juzgados de Trabajo.",
+          "Presentarla únicamente ante redes sociales antes de acudir a las autoridades."
+        ],
+        correctIndex: 0,
+        explanation: "Se recomienda acudir primero a la propia institución donde labora el funcionario (por tener potestad disciplinaria) y elegir una sola instancia para evitar duplicidades y usar eficientemente los recursos."
+      },
+      {
+        id: 6,
+        question: "¿Cuál es la ÚNICA excepción prevista en la ley para revelar la identidad confidencial de una persona denunciante?",
+        options: [
+          "Cuando el expediente administrativo ya fue archivado y concluido.",
+          "Cuando la jefatura del denunciado solicita conocer quién presentó la queja.",
+          "Cuando un juez penal solicita la información ante la posible existencia de un delito contra el honor de la persona denunciada.",
+          "Cuando transcurren más de seis meses desde la presentación de la denuncia."
+        ],
+        correctIndex: 2,
+        explanation: "La identidad permanece confidencial incluso después de archivado el expediente; la única excepción legal es la solicitud de un juez penal ante un posible delito contra el honor."
+      },
+      {
+        id: 7,
+        question: "Según la Ley N.° 10.437, ¿ante qué instancia debe plantearse un reclamo por represalias laborales contra un denunciante o testigo de corrupción?",
+        options: [
+          "Ante la Contraloría General de la República.",
+          "Ante los Juzgados de Trabajo, con posibilidad de asistencia legal gratuita en la Unidad Laboral de la Defensa Pública.",
+          "Únicamente ante la Auditoría Interna de la institución.",
+          "Ante el Organismo de Investigación Judicial (OIJ)."
+        ],
+        correctIndex: 1,
+        explanation: "Los reclamos por represalias laborales bajo la Ley N.° 10.437 se presentan ante los Juzgados de Trabajo, y se puede acceder a defensa legal gratuita mediante la Unidad Laboral de la Defensa Pública."
+      },
+      {
+        id: 8,
+        question: "Sobre el alcance de la protección contra represalias laborales de la Ley N.° 10.437, ¿cuál afirmación es correcta?",
+        options: [
+          "Solo protege a funcionarios públicos y únicamente después de haber sido despedidos.",
+          "Tiene un plazo máximo improrrogable de un año a partir de la denuncia.",
+          "Protege a denunciantes y testigos del sector público y privado, cubre tanto represalias consumadas como amenazas, e incluye acciones realizadas por terceros a nombre del empleador o jefatura.",
+          "Aplica únicamente para testigos en juicios penales y excluye procedimientos administrativos."
+        ],
+        correctIndex: 2,
+        explanation: "La Ley N.° 10.437 cubre a denunciantes y testigos tanto en el sector público como en el privado, protege contra represalias consumadas y amenazas (incluso de terceros a nombre del empleador) y no tiene un plazo fijo."
+      }
+    ];
+
+    const appState = {
+      currentStep: 1,
+      maxUnlockedStep: 1,
+      currentModule: 0,
+      user: { fullName: "", email: "" },
+      exam: {
+        answers: {},
+        submitted: false,
+        score: 0,
+        passed: false,
+        dateFormatted: "",
+        verificationCode: ""
+      }
+    };
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      const styles = {
+        info: "bg-navy text-white border-navy-light",
+        error: "bg-red-700 text-white border-red-800",
+        success: "bg-emerald-700 text-white border-emerald-800"
+      };
+      toast.className = `pointer-events-auto rounded-xl px-4 py-3 text-sm font-medium shadow-lg border flex items-center gap-2.5 fade-in ${styles[type] || styles.info}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.3s ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 3800);
+    }
+
+    function formatSpanishDate(dateObj) {
+      const meses = [
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+      ];
+      return `${dateObj.getDate()} de ${meses[dateObj.getMonth()]} de ${dateObj.getFullYear()}`;
+    }
+
+    function generateVerificationCode(dateObj) {
+      const yyyy = dateObj.getFullYear();
+      const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const dd = String(dateObj.getDate()).padStart(2, "0");
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let rand = "";
+      for (let i = 0; i < 4; i++) rand += chars.charAt(Math.floor(Math.random() * chars.length));
+      return `RACSA-DEI-${yyyy}${mm}${dd}-${rand}`;
+    }
+
+    function navigateToStep(stepNumber) {
+      if (stepNumber > appState.maxUnlockedStep) {
+        if (stepNumber === 4) {
+          showToast("Debes aprobar el examen (mínimo 7 de 8) para desbloquear tu Comprobante.", "info");
+        } else {
+          showToast("Completa el paso anterior para avanzar.", "info");
+        }
+        return;
+      }
+      appState.currentStep = stepNumber;
+      for (let i = 1; i <= 4; i++) {
+        const sec = document.getElementById(`section-${i}`);
+        if (sec) sec.classList.toggle("hidden", i !== stepNumber);
+      }
+      updateProgressBar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function updateProgressBar() {
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`step-btn-${i}`);
+        const num = btn.querySelector(".step-num");
+        btn.classList.remove("bg-white", "text-navy", "shadow-sm", "bg-white/15", "text-white", "bg-white/5", "text-slate-400", "cursor-not-allowed");
+        num.classList.remove("bg-corp", "text-white", "bg-emerald-500", "bg-white/20", "text-slate-300");
+
+        if (i === appState.currentStep) {
+          btn.classList.add("bg-white", "text-navy", "shadow-sm");
+          num.classList.add("bg-corp", "text-white");
+        } else if (i <= appState.maxUnlockedStep) {
+          btn.classList.add("bg-white/15", "text-white");
+          num.classList.add(i < appState.currentStep || (i === 4 && appState.exam.passed) ? "bg-emerald-500" : "bg-white/20", "text-white");
+        } else {
+          btn.classList.add("bg-white/5", "text-slate-400", "cursor-not-allowed");
+          num.classList.add("bg-white/20", "text-slate-300");
+        }
+      }
+    }
+
+    // REGISTRO
+    const registrationForm = document.getElementById("registration-form");
+    const inputFullname = document.getElementById("input-fullname");
+    const inputEmail = document.getElementById("input-email");
+    const errorFullname = document.getElementById("error-fullname");
+    const errorEmail = document.getElementById("error-email");
+
+    function setFieldError(inputEl, errorEl, message) {
+      if (message) {
+        inputEl.classList.add("border-red-500", "focus:ring-red-500", "focus:border-red-500");
+        inputEl.classList.remove("border-slate-300");
+        errorEl.textContent = message;
+        errorEl.classList.remove("hidden");
+      } else {
+        inputEl.classList.remove("border-red-500", "focus:ring-red-500", "focus:border-red-500");
+        inputEl.classList.add("border-slate-300");
+        errorEl.textContent = "";
+        errorEl.classList.add("hidden");
+      }
+    }
+
+    registrationForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let isValid = true;
+      const nameVal = inputFullname.value.trim().replace(/\s+/g, " ");
+      const emailVal = inputEmail.value.trim().toLowerCase();
+
+      if (nameVal.length < 3) {
+        setFieldError(inputFullname, errorFullname, "Por favor ingresa tu nombre completo (mínimo 3 caracteres).");
+        isValid = false;
+      } else {
+        setFieldError(inputFullname, errorFullname, "");
+      }
+
+      const gmailRegex = /^[a-z0-9._%+-]+@gmail\.com$/i;
+      if (!emailVal) {
+        setFieldError(inputEmail, errorEmail, "El correo electrónico de Gmail es obligatorio.");
+        isValid = false;
+      } else if (!gmailRegex.test(emailVal)) {
+        setFieldError(inputEmail, errorEmail, "Debes ingresar un correo válido que termine en @gmail.com (ejemplo: usuario@gmail.com).");
+        isValid = false;
+      } else {
+        setFieldError(inputEmail, errorEmail, "");
+      }
+
+      if (!isValid) {
+        showToast("Revisa los campos marcados antes de continuar.", "error");
+        return;
+      }
+
+      appState.user.fullName = nameVal;
+      appState.user.email = emailVal;
+
+      document.getElementById("header-user-name").textContent = nameVal;
+      document.getElementById("header-user-badge").classList.remove("hidden");
+      document.getElementById("header-user-badge").classList.add("flex");
+
+      if (appState.maxUnlockedStep < 2) appState.maxUnlockedStep = 2;
+
+      selectModule(0);
+      navigateToStep(2);
+      showToast(`¡Bienvenido(a), ${nameVal}!`, "success");
+    });
+
+    // MINICURSO
+    function selectModule(index) {
+      if (index < 0 || index > 3) return;
+      appState.currentModule = index;
+
+      for (let i = 0; i < 4; i++) {
+        const pane = document.getElementById(`module-content-${i}`);
+        const tab = document.getElementById(`mod-tab-${i}`);
+        if (i === index) {
+          pane.classList.remove("hidden");
+          tab.classList.add("bg-navy", "text-white", "border-navy", "shadow-sm");
+          tab.classList.remove("bg-slate-50", "text-slate-600", "border-slate-200", "hover:bg-ice");
+        } else {
+          pane.classList.add("hidden");
+          tab.classList.remove("bg-navy", "text-white", "border-navy", "shadow-sm");
+          tab.classList.add("bg-slate-50", "text-slate-600", "border-slate-200", "hover:bg-ice");
+        }
+      }
+
+      const btnPrev = document.getElementById("btn-mod-prev");
+      const btnNext = document.getElementById("btn-mod-next");
+      const btnExam = document.getElementById("btn-go-exam");
+      document.getElementById("mod-counter").textContent = `Módulo ${index + 1} de 4`;
+
+      btnPrev.classList.toggle("opacity-40", index === 0);
+      btnPrev.classList.toggle("pointer-events-none", index === 0);
+
+      if (index === 3) {
+        btnNext.classList.add("hidden");
+        btnExam.classList.remove("hidden");
+        if (appState.maxUnlockedStep < 3) {
+          appState.maxUnlockedStep = 3;
+          updateProgressBar();
+        }
+      } else {
+        btnNext.classList.remove("hidden");
+        btnExam.classList.add("hidden");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function changeModule(delta) {
+      selectModule(appState.currentModule + delta);
+    }
+
+    // EXPORTAR SOLO MATERIAL DIDÁCTICO A PDF (VERTICAL, 4 MÓDULOS, SIN EXAMEN)
+    function exportDidacticMaterialPDF() {
+      const printContainer = document.getElementById("didactic-print-container");
+      const dynamicStyle = document.getElementById("dynamic-page-style");
+
+      let combinedHtml = `
+        <div style="border-bottom: 3px solid #002D62; padding-bottom: 12px; margin-bottom: 24px;">
+          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #009FE3; margin: 0;">
+            Departamento de Estrategia e Innovación · RACSA
+          </p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #002D62; margin: 4px 0 6px 0;">
+            Material Didáctico: Cómo y dónde denunciar actos de corrupción
+          </h1>
+          <p style="font-size: 11px; color: #475569; margin: 0;">
+            Fuente: Ponencia de la Mag. Tatiana Gutiérrez Delgado · Procuraduría de la Ética Pública (PGR Costa Rica).
+          </p>
+        </div>
+      `;
+
+      for (let i = 0; i < 4; i++) {
+        const modEl = document.getElementById(`module-content-${i}`);
+        if (modEl) {
+          combinedHtml += `<div class="didactic-module-block space-y-4">${modEl.innerHTML}</div>`;
+        }
+      }
+
+      printContainer.innerHTML = combinedHtml;
+      dynamicStyle.textContent = "@media print { @page { size: portrait; margin: 14mm; } }";
+      document.body.classList.remove("print-mode-cert");
+      document.body.classList.add("print-mode-material");
+
+      window.print();
+
+      // Restaurar modo certificado tras imprimir
+      setTimeout(() => {
+        document.body.classList.remove("print-mode-material");
+        document.body.classList.add("print-mode-cert");
+        dynamicStyle.textContent = "@media print { @page { size: landscape; margin: 0; } }";
+      }, 500);
+    }
+
+    function startExam() {
+      if (appState.maxUnlockedStep < 3) appState.maxUnlockedStep = 3;
+      renderExamQuestions();
+      navigateToStep(3);
+    }
+
+    // EXAMEN
+    function renderExamQuestions() {
+      const container = document.getElementById("questions-container");
+      container.innerHTML = "";
+      const letters = ["a", "b", "c", "d"];
+
+      EXAM_QUESTIONS.forEach((q, qIdx) => {
+        const card = document.createElement("div");
+        card.id = `q-card-${q.id}`;
+        card.className = "bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6 transition";
+
+        let optionsHtml = "";
+        q.options.forEach((optText, oIdx) => {
+          const isChecked = appState.exam.answers[q.id] === oIdx;
+          const isDisabled = appState.exam.submitted ? "disabled" : "";
+          let optionClasses = "border-slate-200 hover:border-corp hover:bg-ice/40";
+
+          if (appState.exam.submitted) {
+            if (oIdx === q.correctIndex) {
+              optionClasses = "border-emerald-500 bg-emerald-50/80 text-emerald-950 font-medium";
+            } else if (isChecked && oIdx !== q.correctIndex) {
+              optionClasses = "border-red-400 bg-red-50/80 text-red-950";
+            } else {
+              optionClasses = "border-slate-200 opacity-65";
+            }
+          } else if (isChecked) {
+            optionClasses = "border-corp bg-ice/60 ring-1 ring-corp";
+          }
+
+          optionsHtml += `
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition ${optionClasses}">
+              <input
+                type="radio"
+                name="question-${q.id}"
+                value="${oIdx}"
+                ${isChecked ? "checked" : ""}
+                ${isDisabled}
+                onchange="selectAnswer(${q.id}, ${oIdx})"
+                class="mt-1 h-4 w-4 text-corp focus:ring-corp shrink-0"
+              />
+              <span class="text-sm text-slate-700 leading-relaxed">
+                <strong class="text-navy mr-1">${letters[oIdx]})</strong> ${optText}
+              </span>
+            </label>
+          `;
+        });
+
+        let feedbackHtml = "";
+        if (appState.exam.submitted) {
+          const isCorrect = appState.exam.answers[q.id] === q.correctIndex;
+          feedbackHtml = isCorrect
+            ? `<div class="mt-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-900"><strong>✓ Respuesta correcta.</strong> ${q.explanation}</div>`
+            : `<div class="mt-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs sm:text-sm text-red-900"><strong>✕ Respuesta incorrecta.</strong> ${q.explanation}</div>`;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-start gap-3 mb-4">
+            <span class="w-7 h-7 rounded-lg bg-navy text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">${qIdx + 1}</span>
+            <h3 class="text-sm sm:text-base font-bold text-navy leading-snug">${q.question}</h3>
+          </div>
+          <div class="space-y-2.5">${optionsHtml}</div>
+          ${feedbackHtml}
+        `;
+        container.appendChild(card);
+      });
+      updateAnsweredCounter();
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (appState.exam.submitted) return;
+      appState.exam.answers[questionId] = optionIndex;
+      updateAnsweredCounter();
+      const card = document.getElementById(`q-card-${questionId}`);
+      if (card) {
+        const labels = card.querySelectorAll("label");
+        labels.forEach((lbl, idx) => {
+          lbl.classList.toggle("border-corp", idx === optionIndex);
+          lbl.classList.toggle("bg-ice/60", idx === optionIndex);
+          lbl.classList.toggle("ring-1", idx === optionIndex);
+          lbl.classList.toggle("ring-corp", idx === optionIndex);
+          lbl.classList.toggle("border-slate-200", idx !== optionIndex);
+        });
+      }
+    }
+
+    function updateAnsweredCounter() {
+      const answered = Object.keys(appState.exam.answers).length;
+      document.getElementById("exam-answered-count").textContent = `${answered} / ${EXAM_QUESTIONS.length}`;
+    }
+
+    document.getElementById("exam-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (appState.exam.submitted) return;
+
+      const missing = EXAM_QUESTIONS.filter((q) => appState.exam.answers[q.id] === undefined);
+      if (missing.length > 0) {
+        showToast(`Te faltan ${missing.length} pregunta(s) por responder antes de calificar.`, "error");
+        const firstMissingCard = document.getElementById(`q-card-${missing[0].id}`);
+        if (firstMissingCard) {
+          firstMissingCard.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstMissingCard.classList.add("ring-2", "ring-red-400");
+          setTimeout(() => firstMissingCard.classList.remove("ring-2", "ring-red-400"), 2200);
+        }
+        return;
+      }
+
+      let correctCount = 0;
+      EXAM_QUESTIONS.forEach((q) => {
+        if (appState.exam.answers[q.id] === q.correctIndex) correctCount++;
+      });
+
+      const total = EXAM_QUESTIONS.length;
+      const percentage = Math.round((correctCount / total) * 100);
+      const passed = correctCount >= 7;
+
+      appState.exam.submitted = true;
+      appState.exam.score = correctCount;
+      appState.exam.passed = passed;
+
+      renderExamQuestions();
+      document.getElementById("exam-submit-bar").classList.add("hidden");
+
+      const banner = document.getElementById("exam-result-banner");
+      banner.classList.remove("hidden", "bg-emerald-50", "border-emerald-300", "bg-red-50", "border-red-300");
+
+      if (passed) {
+        const now = new Date();
+        appState.exam.dateFormatted = formatSpanishDate(now);
+        appState.exam.verificationCode = generateVerificationCode(now);
+        appState.maxUnlockedStep = 4;
+        updateProgressBar();
+        populateCertificate();
+
+        enviarRegistroAGoogleSheets({
+          nombre: appState.user.fullName,
+          correo: appState.user.email,
+          calificacion: `${correctCount}/${total}`,
+          porcentaje: `${percentage}%`,
+          fecha: appState.exam.dateFormatted,
+          codigo: appState.exam.verificationCode
+        });
+
+        banner.classList.add("bg-emerald-50", "border-emerald-300");
+        banner.innerHTML = `
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-emerald-700">Resultado: Aprobado</p>
+              <h3 class="text-xl sm:text-2xl font-bold text-emerald-950 mt-0.5">¡Felicidades! Obtuviste ${correctCount}/${total} (${percentage}%)</h3>
+              <p class="text-sm text-emerald-800 mt-1">Has superado satisfactoriamente la evaluación. Ya puedes visualizar y descargar tu Comprobante de Participación.</p>
+            </div>
+            <button type="button" onclick="navigateToStep(4)" class="shrink-0 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-md transition">
+              <span>Ver y Descargar Comprobante</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </button>
+          </div>
+        `;
+        showToast("¡Examen aprobado! Comprobante habilitado.", "success");
+      } else {
+        banner.classList.add("bg-red-50", "border-red-300");
+        banner.innerHTML = `
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-red-700">Resultado: No aprobado</p>
+              <h3 class="text-xl sm:text-2xl font-bold text-red-950 mt-0.5">Obtuviste ${correctCount}/${total} (${percentage}%)</h3>
+              <p class="text-sm text-red-800 mt-1">Necesitas al menos 7 de 8 respuestas correctas (80%) para aprobar. Revisa la retroalimentación abajo y vuelve a intentarlo.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2.5 shrink-0">
+              <button type="button" onclick="navigateToStep(2)" class="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-red-300 bg-white text-red-800 hover:bg-red-100 font-semibold text-sm transition">Repasar Minicurso</button>
+              <button type="button" onclick="retryExam()" class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-corp hover:bg-corp-hover text-white font-bold text-sm shadow-sm transition">Reintentar Examen</button>
+            </div>
+          </div>
+        `;
+        showToast("No alcanzaste el mínimo de 80%. Puedes repasar y reintentar.", "error");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    function retryExam() {
+      appState.exam.answers = {};
+      appState.exam.submitted = false;
+      appState.exam.score = 0;
+      appState.exam.passed = false;
+      document.getElementById("exam-result-banner").classList.add("hidden");
+      document.getElementById("exam-submit-bar").classList.remove("hidden");
+      renderExamQuestions();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      showToast("Examen reiniciado. ¡Mucho éxito en este intento!", "info");
+    }
+
+    // CERTIFICADO (HTML + PDF + CANVAS PNG PALETA RACSA SIN SELLO NI FIRMA)
+    function populateCertificate() {
+      const total = EXAM_QUESTIONS.length;
+      const pct = Math.round((appState.exam.score / total) * 100);
+      document.getElementById("cert-user-name").textContent = appState.user.fullName;
+      document.getElementById("cert-date").textContent = appState.exam.dateFormatted;
+      document.getElementById("cert-score").textContent = `${appState.exam.score}/${total} (${pct}%)`;
+      document.getElementById("cert-code").textContent = appState.exam.verificationCode;
+      document.getElementById("cert-email").textContent = appState.user.email;
+    }
+
+    function printCertificatePDF() {
+      const dynamicStyle = document.getElementById("dynamic-page-style");
+      dynamicStyle.textContent = "@media print { @page { size: landscape; margin: 0; } }";
+      document.body.classList.remove("print-mode-material");
+      document.body.classList.add("print-mode-cert");
+      window.print();
+    }
+
+    function downloadCertificatePNG() {
+      try {
+        const canvas = document.getElementById("certificate-canvas");
+        const ctx = canvas.getContext("2d");
+        const W = 1600;
+        const H = 1130;
+
+        // 1. Fondo blanco con trama guilloché sutil en azul claro
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(0, 45, 98, 0.035)";
+        ctx.lineWidth = 1.2;
+        for (let r = 80; r < 850; r += 26) {
+          ctx.beginPath();
+          ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 2. Marco institucional RACSA (azul marino + cian)
+        ctx.strokeStyle = "#002D62";
+        ctx.lineWidth = 18;
+        ctx.strokeRect(42, 42, W - 84, H - 84);
+
+        ctx.strokeStyle = "#009FE3";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(68, 68, W - 136, H - 136);
+
+        // Esquinas decorativas en cian
+        const cornerSize = 36;
+        ctx.strokeStyle = "#009FE3";
+        ctx.lineWidth = 4;
+        const drawCorner = (x, y, dx, dy) => {
+          ctx.beginPath();
+          ctx.moveTo(x, y + dy * cornerSize);
+          ctx.lineTo(x, y);
+          ctx.lineTo(x + dx * cornerSize, y);
+          ctx.stroke();
+        };
+        drawCorner(86, 86, 1, 1);
+        drawCorner(W - 86, 86, -1, 1);
+        drawCorner(86, H - 86, 1, -1);
+        drawCorner(W - 86, H - 86, -1, -1);
+
+        // 3. Título bicolor
+        ctx.font = "700 66px 'Playfair Display', Georgia, serif";
+        const t1 = "COMPROBANTE ";
+        const t2 = "DE PARTICIPACIÓN";
+        const w1 = ctx.measureText(t1).width;
+        const w2 = ctx.measureText(t2).width;
+        const startX = (W - (w1 + w2)) / 2;
+
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#002D62";
+        ctx.fillText(t1, startX, 240);
+        ctx.fillStyle = "#009FE3";
+        ctx.fillText(t2, startX + w1, 240);
+
+        // 4. Cuerpo central
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#002D62";
+        ctx.font = "italic 600 32px 'Playfair Display', Georgia, serif";
+        ctx.fillText("Otorgado a:", W / 2, 330);
+
+        const participantName = appState.user.fullName;
+        let nameFontSize = 72;
+        ctx.font = `italic 700 ${nameFontSize}px 'Playfair Display', Georgia, serif`;
+        while (ctx.measureText(participantName).width > W - 260 && nameFontSize > 34) {
+          nameFontSize -= 2;
+          ctx.font = `italic 700 ${nameFontSize}px 'Playfair Display', Georgia, serif`;
+        }
+        ctx.fillStyle = "#002D62";
+        ctx.fillText(participantName, W / 2, 435);
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "400 28px Inter, system-ui, sans-serif";
+        ctx.fillText("Por haber completado y aprobado el minicurso:", W / 2, 525);
+
+        ctx.fillStyle = "#002D62";
+        ctx.font = "700 42px Inter, system-ui, sans-serif";
+        ctx.fillText("Cómo y dónde denunciar actos de corrupción", W / 2, 595);
+
+        // 5. Dos columnas inferiores limpias (sin sello ni firma manuscrita)
+        const leftX = 430;
+        const rightX = 1170;
+
+        // Izquierda: Fecha de Aprobación
+        ctx.fillStyle = "#002D62";
+        ctx.font = "500 26px Inter, system-ui, sans-serif";
+        ctx.fillText("Fecha de Aprobación", leftX, 790);
+        ctx.font = "700 28px Inter, system-ui, sans-serif";
+        ctx.fillText(appState.exam.dateFormatted, leftX, 835);
+        ctx.fillStyle = "#009FE3";
+        ctx.fillRect(leftX - 180, 855, 360, 3);
+
+        // Derecha: Acredita
+        ctx.fillStyle = "#002D62";
+        ctx.font = "500 26px Inter, system-ui, sans-serif";
+        ctx.fillText("Acredita:", rightX, 790);
+        ctx.font = "700 28px Inter, system-ui, sans-serif";
+        ctx.fillText("Jimena Zárate Manzanares", rightX, 835);
+        ctx.fillStyle = "#009FE3";
+        ctx.fillRect(rightX - 210, 855, 420, 3);
+        ctx.fillStyle = "#002D62";
+        ctx.font = "500 22px Inter, system-ui, sans-serif";
+        ctx.fillText("Departamento de Estrategia e Innovación, RACSA", rightX, 895);
+
+        // 6. Pie de verificación
+        ctx.fillStyle = "#cbd5e1";
+        ctx.fillRect(115, 985, W - 230, 1.5);
+
+        const total = EXAM_QUESTIONS.length;
+        const pct = Math.round((appState.exam.score / total) * 100);
+        ctx.fillStyle = "#475569";
+        ctx.font = "500 17px Inter, system-ui, sans-serif";
+
+        ctx.textAlign = "left";
+        ctx.fillText(`Calificación: ${appState.exam.score}/${total} (${pct}%)`, 115, 1022);
+        ctx.textAlign = "center";
+        ctx.fillText(`Código de verificación: ${appState.exam.verificationCode}`, W / 2, 1022);
+        ctx.textAlign = "right";
+        ctx.fillText(`Correo registrado: ${appState.user.email}`, W - 115, 1022);
+
+        const safeName = participantName
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-zA-Z0-9\s]/g, "")
+          .trim()
+          .replace(/\s+/g, "_");
+
+        const link = document.createElement("a");
+        link.download = `Comprobante_Participacion_${safeName || "Participante"}.png`;
+        link.href = canvas.toDataURL("image/png", 1.0);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showToast("Comprobante PNG descargado correctamente.", "success");
+      } catch (error) {
+        console.error("Error al generar la imagen PNG:", error);
+        showToast("Ocurrió un problema al generar la imagen. Intenta usar la opción Imprimir / PDF.", "error");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      updateProgressBar();
+    });
+  </script>
+</body>
+</html>
