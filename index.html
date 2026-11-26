@@ -49,8 +49,10 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .cert-aspect {
-      aspect-ratio: 1600 / 1130;
+    @media (min-width: 640px) {
+      .cert-aspect {
+        aspect-ratio: 1600 / 1130;
+      }
     }
 
     /* Trama guilloché sutil para el certificado */
@@ -825,8 +827,8 @@
           class="cert-aspect w-full max-w-[960px] bg-white rounded-xl shadow-xl overflow-hidden relative p-3 sm:p-5 md:p-6 select-none"
         >
           <!-- Marco institucional RACSA (azul marino + doble línea cian) -->
-          <div class="w-full h-full border-[6px] sm:border-[8px] border-navy p-1.5 sm:p-2 relative">
-            <div class="w-full h-full border-2 border-corp relative flex flex-col justify-between px-6 sm:px-12 md:px-16 py-6 sm:py-9 md:py-11 cert-guilloche">
+          <div class="w-full h-full border-[5px] sm:border-[8px] border-navy p-1.5 sm:p-2 relative">
+            <div class="w-full h-full border-2 border-corp relative flex flex-col justify-between gap-4 sm:gap-0 px-4 sm:px-12 md:px-16 py-6 sm:py-9 md:py-11 cert-guilloche">
 
               <!-- Adornos de esquina en cian corporativo -->
               <span class="absolute top-2 left-2 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-l-2 border-corp"></span>
@@ -836,50 +838,50 @@
 
               <!-- Título bicolor -->
               <div class="text-center pt-1 sm:pt-3">
-                <h3 class="font-serif text-xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                <h3 class="font-serif text-lg sm:text-3xl md:text-4xl font-bold tracking-tight leading-snug">
                   <span class="text-navy">COMPROBANTE</span> <span class="text-corp">DE PARTICIPACIÓN</span>
                 </h3>
               </div>
 
               <!-- Cuerpo central -->
-              <div class="text-center my-auto py-2">
+              <div class="text-center my-auto py-1 sm:py-2">
                 <p class="font-serif italic text-xs sm:text-base text-navy/90">
                   Otorgado a:
                 </p>
-                <p id="cert-user-name" class="mt-1 sm:mt-2 font-serif italic text-2xl sm:text-4xl md:text-5xl font-bold text-navy px-2 break-words">
+                <p id="cert-user-name" class="mt-1 sm:mt-2 font-serif italic text-xl sm:text-4xl md:text-5xl font-bold text-navy px-2 break-words leading-tight">
                   Nombre del Participante
                 </p>
                 <p class="mt-3 sm:mt-5 text-xs sm:text-base text-slate-700">
                   Por haber completado y aprobado el minicurso:
                 </p>
-                <p class="mt-1 sm:mt-2 text-sm sm:text-xl md:text-2xl font-bold text-navy">
+                <p class="mt-1 sm:mt-2 text-sm sm:text-xl md:text-2xl font-bold text-navy leading-snug">
                   Cómo y dónde denunciar actos de corrupción
                 </p>
               </div>
 
               <!-- Dos columnas inferiores limpias (sin sello ni firma manuscrita) -->
               <div class="pt-2 sm:pt-4">
-                <div class="grid grid-cols-2 gap-6 sm:gap-12 items-end max-w-3xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-12 items-end max-w-3xl mx-auto">
                   <!-- Izquierda: Fecha de Aprobación -->
                   <div class="text-center">
-                    <p class="text-[10px] sm:text-sm font-medium text-navy">Fecha de Aprobación</p>
+                    <p class="text-[11px] sm:text-sm font-medium text-navy">Fecha de Aprobación</p>
                     <p id="cert-date" class="mt-0.5 text-xs sm:text-base font-semibold text-navy">--</p>
-                    <div class="mt-1.5 w-36 sm:w-56 h-[2px] bg-corp mx-auto"></div>
+                    <div class="mt-1.5 w-40 sm:w-56 h-[2px] bg-corp mx-auto"></div>
                   </div>
 
                   <!-- Derecha: Acredita -->
                   <div class="text-center">
-                    <p class="text-[10px] sm:text-sm font-medium text-navy">Acredita:</p>
+                    <p class="text-[11px] sm:text-sm font-medium text-navy">Acredita:</p>
                     <p class="mt-0.5 text-xs sm:text-base font-bold text-navy">Jimena Zárate Manzanares</p>
-                    <div class="my-1.5 w-40 sm:w-64 h-[2px] bg-corp mx-auto"></div>
-                    <p class="text-[9px] sm:text-xs font-medium text-navy/90 leading-snug">
+                    <div class="my-1.5 w-44 sm:w-64 h-[2px] bg-corp mx-auto"></div>
+                    <p class="text-[10px] sm:text-xs font-medium text-navy/90 leading-snug">
                       Departamento de Estrategia e Innovación, RACSA
                     </p>
                   </div>
                 </div>
 
                 <!-- Pie discreto de verificación -->
-                <div class="mt-4 sm:mt-6 pt-2 border-t border-slate-200/90 flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5 text-[8px] sm:text-[10px] text-slate-500">
+                <div class="mt-4 sm:mt-6 pt-2 border-t border-slate-200/90 flex flex-col sm:flex-row flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[9px] sm:text-[10px] text-slate-500 text-center sm:text-left">
                   <span>Calificación: <strong id="cert-score" class="text-navy">--</strong></span>
                   <span>Código de verificación: <strong id="cert-code" class="text-navy font-mono">--</strong></span>
                   <span>Correo registrado: <strong id="cert-email" class="text-navy">--</strong></span>
@@ -1024,6 +1026,7 @@
       currentModule: 0,
       user: { fullName: "", email: "" },
       exam: {
+        questions: [],
         answers: {},
         submitted: false,
         score: 0,
@@ -1257,19 +1260,50 @@
       }, 500);
     }
 
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function prepareRandomizedExam() {
+      const shuffledQuestions = shuffleArray(EXAM_QUESTIONS).map((q) => {
+        const indexedOptions = q.options.map((text, idx) => ({
+          text,
+          isCorrect: idx === q.correctIndex
+        }));
+        const shuffledOptions = shuffleArray(indexedOptions);
+        return {
+          ...q,
+          options: shuffledOptions.map((o) => o.text),
+          correctIndex: shuffledOptions.findIndex((o) => o.isCorrect)
+        };
+      });
+      appState.exam.questions = shuffledQuestions;
+    }
+
     function startExam() {
       if (appState.maxUnlockedStep < 3) appState.maxUnlockedStep = 3;
+      if (appState.exam.questions.length === 0) {
+        prepareRandomizedExam();
+      }
       renderExamQuestions();
       navigateToStep(3);
     }
 
     // EXAMEN
     function renderExamQuestions() {
+      if (appState.exam.questions.length === 0) {
+        prepareRandomizedExam();
+      }
       const container = document.getElementById("questions-container");
       container.innerHTML = "";
       const letters = ["a", "b", "c", "d"];
 
-      EXAM_QUESTIONS.forEach((q, qIdx) => {
+      appState.exam.questions.forEach((q, qIdx) => {
         const card = document.createElement("div");
         card.id = `q-card-${q.id}`;
         card.className = "bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6 transition";
@@ -1357,7 +1391,8 @@
       e.preventDefault();
       if (appState.exam.submitted) return;
 
-      const missing = EXAM_QUESTIONS.filter((q) => appState.exam.answers[q.id] === undefined);
+      const activeQuestions = appState.exam.questions;
+      const missing = activeQuestions.filter((q) => appState.exam.answers[q.id] === undefined);
       if (missing.length > 0) {
         showToast(`Te faltan ${missing.length} pregunta(s) por responder antes de calificar.`, "error");
         const firstMissingCard = document.getElementById(`q-card-${missing[0].id}`);
@@ -1370,11 +1405,11 @@
       }
 
       let correctCount = 0;
-      EXAM_QUESTIONS.forEach((q) => {
+      activeQuestions.forEach((q) => {
         if (appState.exam.answers[q.id] === q.correctIndex) correctCount++;
       });
 
-      const total = EXAM_QUESTIONS.length;
+      const total = activeQuestions.length;
       const percentage = Math.round((correctCount / total) * 100);
       const passed = correctCount >= 7;
 
@@ -1445,6 +1480,7 @@
       appState.exam.submitted = false;
       appState.exam.score = 0;
       appState.exam.passed = false;
+      prepareRandomizedExam();
       document.getElementById("exam-result-banner").classList.add("hidden");
       document.getElementById("exam-submit-bar").classList.remove("hidden");
       renderExamQuestions();
